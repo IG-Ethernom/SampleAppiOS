@@ -1,0 +1,209 @@
+/*
+ Localizable.strings
+ E-Wallet
+ 
+ Created by Puttheavy Tep on 24/5/22.
+ 
+ */
+// Associate
+// Associate
+"ASSOCIATE_DEVICE" = "ASSOCIATE DEVICE";
+"NO_ASSOCATE_DEVICE" = "No Associated Device";
+"SELECT_DEVICE" = "Please select your Device to associate with the\nE-Wallet Application";
+"CONNECTING_TO" = "Connecting to Device";
+
+// scan QR code
+"SCAN_QR" = "Scan QR Code";
+"SCAN_DEVICE" = "Please scan the QR code that stick-on the device";
+"SCAN_RECIPIENT" = "Align the QR code of Recipient Address with the frame to scan";
+
+// Discover Device
+"DISCOVER_DEVICE" = "Discover Device";
+"DISOCER_GUIDE" = "Discover Guide";
+"GUIDE_DESC" = "Please press the button until hear thee beep on Device.";
+
+/// ewallet request
+"EWALLET_TIMEOUT" = "E-Wallet Request was timeout. Exit the app and try again.";
+"START_EWALLET_LOADING" = "Starting E-Wallet";
+
+"CREATE_PASSCODE" = "Create your passcode";
+"ENTER_PASSCODE" = "Enter your passcode";
+"VERIFY_PASSCODE" = "Verify passcode";
+"RETYPE_PASSCODE" = "Re-type your passcode";
+
+/// create wallet
+"CREATE_NEW_WALLET" = "Create New Wallet";
+"CREATE_WALLET_LOADING" = "Creating Wallet";
+"CREATE_WALLET_SUCCESS" = "Creating new wallet successfully";
+"FINISHED_CREATING" = "Creating";
+"FINISHED_RECOVERING" = "Recovering";
+
+"WALLET_ALREADY_EXIST" = "Your wallet ID already exist.";
+"CREATE_WALLET_TIMEOUT" = "Create wallet request was timeout";
+"CREATE_WALLET_FAILED" = "Create wallet request was failure";
+
+// recover
+"RECOVER_WALLET" = "Recover Wallet";
+"SIGN_IN_WITH_RECOVER_PHARSE" = "Recover your wallet";
+"WORD_PHRASE_INTO" = "Please enter 12 words recovery phrase of the wallet";
+"RECOVER_EWALLET_REQUEST" = "Recover wallet request";
+"RECOVER_SUCCESS" = "Recover wallet request successfully";
+"RECOVER_EMPTY" = "The recovery key was empty. Please double-check and try again.";
+
+"RECOVER_WALLET_TIMEOUT" = "Recover request was timeout";
+"RECOVER_WALLET_FAILED" = "Recover wallet request was failure";
+
+"RESTORE_WITH_12_PHRASE" = " Recover your wallet with 12 words recovery phrase";
+"RESTORE_BUTTON" = "Restore with recovery phrase";
+"CONFIRM_PHARSE_KEY" = "Confirmation Recover Phrase key";
+"EMPTY_WALLET" = "If you no longer have accessed your device, choose Recover wallet to recover your wallet existing wallet or choose Create new wallet to create new empty wallet";
+
+// delete
+"WIPE_OUT" = "Wipe Out";
+"WIPE_OUT_TIMEOUT" = "Wipe out was timeout";
+"DELETE_WALLET" = "Delete your wallet from device";
+"DELETE_DESCRIPTION" = "Delete your wallet to create a new wallet or to restore your another wallet on this device.";
+"DELETE_TITLE" = "Are you sure to delete the wallet?";
+"DELETE_MESSAGE" = "Delete the wallet will wipe out everything from this device.";
+
+///Check balance
+"CHECK_BALANCE_LOADING" = "Checking balance";
+"CHECKING_BALANCE" = "Checking balance";
+"UPDATE_BALANCE" = "Updating balance";
+"INQUIRY_TRANSECTION_LOADING" = "Getting transaction history";
+"CHECK_BALANCE_TIMEOUT" = "Checking balance was timeout";
+"CHECK_BALANCE_FAILED" = "Checking balance was failure";
+
+"YOUR_RECOVER_PHARSE" = "Your recovery phrase";
+"NEVER_SHARE" = "Never share recovery phrase with anyone.";
+"PLEASE_WRITE_DOWN" = "Please make sure that you have written down in right sequence order.";
+"WRITE_DOWN_KEY" = "Write down or copy these words in the right sequence order and save them somewhere safe.";
+"VERIFY_PHARSE_KEY" = "Verify Recover Phrase key";
+
+//inquiry
+"GET_TRANSECTION_TIMEOUT" = "Getting transaction was timeout";
+"GET_TRANSECTION_FAILURE" = "Getting transaction was failure";
+
+///
+///Create Transection
+"CREATE_TRANSECTION_LOADING" = "Sending transaction";
+"CREATE_TRANS_FAILED" = "Sending transaction was failure.";
+"VERIFY_PIN_FAILED" = "You've entered an incorrect passcode too many time. Please exit the app and try again.";
+"VERIFY_FAILED" = "Passcode does not match";
+"SENDING_TIMEOUT" = "Sending transaction timeout";
+"TRX_SENT" = "Transaction was sent";
+"TRX_DESC" = "It may take sometime to wait the system complete the operation";
+
+//get wallet id
+"GET_WALLET_ID_TIMEOUT" = "Getting your wallet address was timeout";
+"TOAST_DATA_EMPTY" = "Your input data is empty.";
+
+// global
+"CHECK_BALANCE" = "Check Balance";
+"TOTAL_BALANCE" = "Total Balance";
+"SEND" = "Send";
+"SENT" = "Sent";
+"SHARE_WALLET" = "Share Wallet";
+"COPIED_TO_CLIP" = "Copied to clipboard";
+"SHARE_WALLET_ADDRESS" = "Share Wallet Address";
+
+"TRANS_EMPTY" = "You have no transaction at this moment";
+"TRANSECTION" = "Transactions";
+
+"PLEASE_EXIT_APP" = "Please exit the app and try again.";
+"EXIT" = "Exit";
+"Retry" = "Retry";
+"okay" = "Okay";
+"error" = "Error";
+"next" = "Next";
+"previous" = "Previous";
+"continues" = "Continue";
+"yes" = "Yes";
+"no" = "No";
+"copy" = "Copy";
+"share" = "Share";
+"To" = "To";
+"Paste" = "Paste";
+"scan" = "Scan";
+"confirm" = "Confirm";
+"cancel" = "Cancel";
+"CONFIRM_TRX" = "Confirm Transaction";
+"invalid_add" = "Invalid Address";
+"Pasteboard_Desc" = "Pasteboard does not contain a valid recipient address.";
+
+// Transaction history
+"slow" = "Slow";
+"medium" = "Medium";
+"fast" = "Fast";
+"SEND_TRX" = "Send Transaction";
+"amount" = "Amount:";
+"balance" = "Balance:";
+"GET_BALANCEE" = "Get Balance";
+"NETWORK_FEE" = "Network Fee";
+"FEE_RATE" = "Fee rate:";
+
+// menu
+"MENU" = "Menu";
+"TRX_HISTORY" = "Transaction History";
+"DELETE_WALLET_MENU" = "Delete Wallet";
+"ABOUT" = "About";
+"Txid" = "Transaction ID";
+"TO_BTC" = "To BTC wallet";
+"FROM_WALLET" = "From wallet";
+"RECOVER_FROM_WALLET" = "Recieved from wallet";
+"TRANSFER_TO" = "Transfered to wallet";
+
+"LATEST_TRX" = "Latest Transactions";
+"latest" = "Latest";
+"today" = "Today";
+"weekly" = "This Week";
+"monthly" = "This Month";
+"yearly" = "This Year";
+
+//about
+"ABOUT_EWALLET" = "About E-Wallet";
+"APP_VERSION" = "Version:";
+"CAPSULE_VERSION" = "Device Version:";
+"COPY_RIGHT" = "Copyright @";
+"ETHERNOM" = "Ethernom, Inc.";
+"ALL_RIGHT" = "All rights reserved.";
+"TERM_SERVICE" = "Term of service";
+"PRIVACY_POLICY" = "Privacy Policy";
+
+// send trans
+"INSUFFICIENT_FUNDS" = "Insufficient Funds";
+"INSUFFICIENT_FUNDS_MESSAGE" = "You have insufficient fund to send recently. Please wait until system finish the operation.";
+
+"ENTER_AMOUNT" = "Please enter the amount.";
+"ENTER_REC" = "Please enter the recipient's address.";
+"PLEASE_TRY_AGAIN" = "Please try again.";
+"TURN_ON_BLUETOOTH" = "Turn on the Bluetooth device";
+"TURN_ON_BLUETOOTH_DESC" = "This is necessary to find a Bluetooth device near you. Check your Bluetooth device.";
+
+// error message
+"CONNECTION_LOST" = "Connection lost. Please exit the app and try again.";
+"CONNECTION_FAILED" = "Failed to connect​ device.";
+"CONNECTION_TIMEOUT" = "Connecting with device has been timeout. Please try again.";
+"DISCONNECTING" = "Disconnecting";
+
+
+//=======
+
+"RECIEVE" = "Recieved";
+"FROM" = "From:";
+"CLOSE" = "Close";
+"CURRENT_BALANCE" = "Current Balance";
+"LATEST_BALANCE" = "Latest Update:";
+"SEARCH_FOR_NEARBY" = "Searching nearby device...";
+
+"CHOOSE_LANGUAGE" = "Choose your Language";
+"ENGLISH" = "English";
+"JAPENESE" = "Japanese";
+"CHINESE" = "Chinese";
+"INTERNET" = "Please check your internet connection and try again.";
+
+"ERROR_RECIPIENT_FORMAT" = "Invalid Recipient address";
+"TRANSACTION_UNAVAILABLE" = "Transection Unavailable";
+"USER_GUIDE" = "Please press the button until hear the beep on Device";
+"INVALID_QR" = "Invalid QR code.Please Check QR code.";
+"OWN_ADDRESS" = "You're sending to your own address";
