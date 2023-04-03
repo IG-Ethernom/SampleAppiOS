@@ -10,7 +10,6 @@
 		840BB2062986D80500AB51C0 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840BB2052986D80500AB51C0 /* BaseTableViewCell.swift */; };
 		84306CDA298B538F00C96232 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84306CD9298B538F00C96232 /* CustomImageView.swift */; };
 		843A943A29783C5900FDA150 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A943929783C5900FDA150 /* URLSession+Extension.swift */; };
-		843EA63E29DA7A8400E81E97 /* ETHSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 843EA63D29DA7A8400E81E97 /* ETHSDK.xcframework */; };
 		8450735729B2F3BC00CAA1EB /* Extension+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8450735629B2F3BC00CAA1EB /* Extension+CollectionView.swift */; };
 		8477148629D3E24100D2DE20 /* VerifyPINView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477148529D3E24100D2DE20 /* VerifyPINView.swift */; };
 		8477148929D3EBB800D2DE20 /* MainWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477148829D3EBB800D2DE20 /* MainWalletView.swift */; };
@@ -87,12 +86,6 @@
 		8498B8B529822F330064BA47 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498B8B429822F330064BA47 /* CustomButton.swift */; };
 		8498B8C82983D2CB0064BA47 /* CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8498B8C72983D2CB0064BA47 /* CountryCode.swift */; };
 		8498B8CA2983D32D0064BA47 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 8498B8C92983D32D0064BA47 /* countries.json */; };
-		849980C829B5D48700069E0F /* Nunito-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980B829B5D48000069E0F /* Nunito-Italic.ttf */; };
-		849980C929B5D48700069E0F /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980B929B5D48100069E0F /* Nunito-SemiBold.ttf */; };
-		849980CA29B5D48700069E0F /* Nunito-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980BA29B5D48200069E0F /* Nunito-Medium.ttf */; };
-		849980CD29B5D48700069E0F /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980BD29B5D48400069E0F /* Nunito-Light.ttf */; };
-		849980CF29B5D48700069E0F /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980BF29B5D48600069E0F /* Nunito-Bold.ttf */; };
-		849980D129B5D48700069E0F /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849980C129B5D48700069E0F /* Nunito-Regular.ttf */; };
 		849E6DA72985276B004F921E /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E6DA62985276B004F921E /* BaseTableViewController.swift */; };
 		84A3D88629C2D5F500E0F2B8 /* Extension+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A3D88529C2D5F500E0F2B8 /* Extension+Controller.swift */; };
 		84A3D88A29C2F4EC00E0F2B8 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A3D88929C2F4EC00E0F2B8 /* AppFont.swift */; };
@@ -136,7 +129,6 @@
 		840BB2052986D80500AB51C0 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		84306CD9298B538F00C96232 /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		843A943929783C5900FDA150 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
-		843EA63D29DA7A8400E81E97 /* ETHSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = ETHSDK.xcframework; sourceTree = "<group>"; };
 		8450735629B2F3BC00CAA1EB /* Extension+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CollectionView.swift"; sourceTree = "<group>"; };
 		8477148529D3E24100D2DE20 /* VerifyPINView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINView.swift; sourceTree = "<group>"; };
 		8477148829D3EBB800D2DE20 /* MainWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWalletView.swift; sourceTree = "<group>"; };
@@ -215,12 +207,6 @@
 		8498B8B429822F330064BA47 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		8498B8C72983D2CB0064BA47 /* CountryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCode.swift; sourceTree = "<group>"; };
 		8498B8C92983D32D0064BA47 /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
-		849980B829B5D48000069E0F /* Nunito-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Italic.ttf"; sourceTree = "<group>"; };
-		849980B929B5D48100069E0F /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
-		849980BA29B5D48200069E0F /* Nunito-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Medium.ttf"; sourceTree = "<group>"; };
-		849980BD29B5D48400069E0F /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
-		849980BF29B5D48600069E0F /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
-		849980C129B5D48700069E0F /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		849E6DA62985276B004F921E /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
 		84A3D88529C2D5F500E0F2B8 /* Extension+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Controller.swift"; sourceTree = "<group>"; };
 		84A3D88929C2F4EC00E0F2B8 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
@@ -240,7 +226,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				843EA63E29DA7A8400E81E97 /* ETHSDK.xcframework in Frameworks */,
 				A460165553812E2780DE3158 /* Pods_SampleApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,7 +265,6 @@
 		849427E12977991E00582798 = {
 			isa = PBXGroup;
 			children = (
-				843EA63D29DA7A8400E81E97 /* ETHSDK.xcframework */,
 				849427EC2977991E00582798 /* SampleApp */,
 				849427EB2977991E00582798 /* Products */,
 				D38215CF7280F8BB45E2BD45 /* Pods */,
@@ -626,7 +610,6 @@
 		849980B129B5D46B00069E0F /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				84A3D88B29C2F5A800E0F2B8 /* font */,
 				84A3D88929C2F4EC00E0F2B8 /* AppFont.swift */,
 			);
 			path = Fonts;
@@ -648,19 +631,6 @@
 				849428652977A42F00582798 /* BaseView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		84A3D88B29C2F5A800E0F2B8 /* font */ = {
-			isa = PBXGroup;
-			children = (
-				849980BF29B5D48600069E0F /* Nunito-Bold.ttf */,
-				849980B829B5D48000069E0F /* Nunito-Italic.ttf */,
-				849980BD29B5D48400069E0F /* Nunito-Light.ttf */,
-				849980BA29B5D48200069E0F /* Nunito-Medium.ttf */,
-				849980B929B5D48100069E0F /* Nunito-SemiBold.ttf */,
-				849980C129B5D48700069E0F /* Nunito-Regular.ttf */,
-			);
-			path = font;
 			sourceTree = "<group>";
 		};
 		84AFD6B329CF2F73002345DB /* Main */ = {
@@ -766,16 +736,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849980D129B5D48700069E0F /* Nunito-Regular.ttf in Resources */,
 				8498B8CA2983D32D0064BA47 /* countries.json in Resources */,
 				849427FA2977992000582798 /* LaunchScreen.storyboard in Resources */,
-				849980C929B5D48700069E0F /* Nunito-SemiBold.ttf in Resources */,
 				849428752977A4FA00582798 /* Localizable.strings in Resources */,
-				849980CD29B5D48700069E0F /* Nunito-Light.ttf in Resources */,
-				849980CA29B5D48700069E0F /* Nunito-Medium.ttf in Resources */,
 				849427F72977992000582798 /* Assets.xcassets in Resources */,
-				849980C829B5D48700069E0F /* Nunito-Italic.ttf in Resources */,
-				849980CF29B5D48700069E0F /* Nunito-Bold.ttf in Resources */,
 				849427F52977991E00582798 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
