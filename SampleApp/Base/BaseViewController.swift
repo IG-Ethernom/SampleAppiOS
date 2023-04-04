@@ -20,11 +20,15 @@ class BaseViewController: UIViewController {
         view.backgroundColor = .systemBackground //.init(hexString: .colorBackground)
         navigationController?.navigationBar.tintColor = UIColor.black
         
+        enableSwap()
+        hideLoading()
+    }
+    
+    func enableSwap() {
         // enable swap
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
-        hideLoading()
     }
     
     func setupBackNavigation() {

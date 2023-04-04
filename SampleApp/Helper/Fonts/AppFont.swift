@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct AppFont {
+struct AppFonts {
     enum FontType: String {
         case Bold = "Nunito-Bold"
         case Regular = "Nunito-Regular"

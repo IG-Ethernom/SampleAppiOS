@@ -6,28 +6,32 @@
 //
 
 import UIKit
-import ETHSDK
+import EthHFS
 
 class MainViewController: BaseViewController {
     struct FeatureModel {
-        var name: FeatureType
+        var type: FeatureType
+        var name: String
         var icon: String
     }
     
     enum FeatureType: String {
-        case EWL = "EWallet"
-        case HFS = "Health File System"
-        case DOB = "Device Onboard"
-        case DM = "Device Manager"
+        case EWL = "EW"
+        case HFS = "HFS"
+        case DOB = "DOB"
+        case DM = "DM"
+        case DIS = "DIS"
     }
     
     let mainView = MainWalletView()
-    var ethEwallet = EthEwalletAPI.shared
+    private var walletAddress = ""
     var featureItem = [
-        FeatureModel(name: .EWL, icon: "music"),
-        FeatureModel(name: .HFS, icon: "star"),
-        FeatureModel(name: .DOB, icon: "category"),
-        FeatureModel(name: .DM, icon: "edit")
+        FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
+        FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
+        FeatureModel(type: .DOB, name: "Device Onboard", icon: "login"),
+        FeatureModel(type: .DM, name: "Device Manager", icon: "setting"),
+        FeatureModel(type: .DM, name: "Device Maintenance", icon: "category"),
+        FeatureModel(type: .DIS, name: "Disconnect Device", icon: "bluetooth"),
     ]
     override func loadView() {
         view = mainView
@@ -36,20 +40,24 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // setupCustomNavigationBar(title: "Main Dashboard")
-        
         setNavBarAppearance(tintColor: .init(hexString: .colorPrimary), barColor: .init(hexString: .colorPrimary))
         
-        mainView.myCollectionView.delegate = self
-        mainView.myCollectionView.dataSource = self
-        mainView.myCollectionView.register(cell: MainCollectViewCells.self)
-     
+        mainView.tableView.register(cellWithClass: EwalletCell.self)
+        
+        mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
+        
         navigationItem.title = "Main Dashboard"
+        
+    }
+    override func enableSwap() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       // self.navigationController?.isNavigationBarHidden = true
+        // self.navigationController?.isNavigationBarHidden = true
         // remove left buttons (in case you added some)
         self.navigationItem.leftBarButtonItems = []
         // hide the default back buttons
@@ -74,54 +82,45 @@ class MainViewController: BaseViewController {
         return nav
     }()
 }
-
-//MARK: - UICollectionViewDataSource
-extension MainViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - UITableViewDataSource
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return featureItem.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(for: indexPath) as MainCollectViewCells
-        cell.layer.cornerRadius = 15
-        cell.backgroundColor = .init(hexString: .colorPrimary)
-        
-       // cell.layer.borderWidth = 1
-        // cell.layer.borderColor = UIColor.init(hexString: .colorPrimary).cgColor
-        
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withClass: EwalletCell.self)
         let item = featureItem[indexPath.row]
-        cell.titleLabel.text = item.name.rawValue
-        cell.imageThumnail.image = UIImage(named: item.icon)
+        
+        cell.titleLabel.text = item.name
+        cell.itemImage.image = UIImage(named: item.icon)
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.init(hexString: "#ECEFF1")
+        cell.selectedBackgroundView = bgColorView
         
         return cell
+        
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
 }
 
-extension MainViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
-                        UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width  = (view.frame.width-30)/2
-        return CGSize(width: width, height: 120)
-    }
-}
-//MARK: - UICollectionViewDelegate
-extension MainViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // delegate?.openVideoController(data: element, index: indexPath)
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         operateFeature(item: featureItem[indexPath.row])
     }
     
     func operateFeature(item: FeatureModel) {
-        switch item.name {
+        switch item.type {
             
         case .EWL:
-            //requestEwalletService()
-            
             let controller = EwalletViewController()
             controller.navigationController?.isNavigationBarHidden = false
             pushToViewController(controller: controller)
-            
         case .HFS:
             print("HFS")
             break
@@ -129,41 +128,10 @@ extension MainViewController: UICollectionViewDelegate {
             break
         case .DM:
             break;
+        case .DIS:
+            break
         }
     }
 }
 
-//MARK: ETHEWalletDataResponseDelegate
-extension MainViewController: ETHEWalletDataResponseDelegate {
-    func requestEwalletService() {
-        //MARK: INIT EWALLET SERVICE and REQUEST EWALLET
-        showLoading(message: "Ewallet Request")
-        ethEwallet.initEwalletService(delegate: self, completion: { [self] in
-            ethEwallet.startEwalletRequest(failure: {timeout in
-                if timeout {
-                    print("request timeout")
-                }
-            })
-        })
-        
-    }
-    
-    func walletResponse(with address: WalletAdressResponse) {
-        if address.status {
-            // TODO: Request verify pin
-            ethEwallet.verifyPinRequest(pinVerify: "222222", failure: {timeOut in
-                
-            })
-        }
-    }
-    
-    func verifyInputPin(_ status: Bool) {
-        if status {
-            // TODO: Check balance
-            let controller = EwalletViewController()
-            controller.navigationController?.isNavigationBarHidden = false
-            pushToViewController(controller: controller)
-            
-        }
-    }
-}
+

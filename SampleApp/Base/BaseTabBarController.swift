@@ -29,14 +29,14 @@ class BaseTabBarController: UITabBarController {
         tabBar.clipsToBounds = true
         tabBar.backgroundImage = UIImage(named: "tabbar_bg")
         
-        let attributes = [NSAttributedString.Key.font: AppFont.font(type: .Regular, size: 17)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
+       // let attributes = [NSAttributedString.Key.font: AppFont.font(type: .Regular, size: 17)]
+       // UINavigationBar.appearance().titleTextAttributes = attributes
+       // UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
         
-        let attributesTab = [NSAttributedString.Key.font: AppFont.font(type: .Regular, size: 11)]
-        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .application)
+//        let attributesTab = [NSAttributedString.Key.font: AppFont.font(type: .Regular, size: 11)]
+//        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .normal)
+//        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .selected)
+//        UITabBarItem.appearance().setTitleTextAttributes(attributesTab, for: .application)
         
     }
     

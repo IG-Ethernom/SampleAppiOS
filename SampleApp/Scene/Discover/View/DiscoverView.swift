@@ -110,7 +110,7 @@ class DeviceFooterView: BaseView {
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "info")
+        image.image = UIImage(named: "infocircle")
         return image
     }()
 }

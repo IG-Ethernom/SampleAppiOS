@@ -42,7 +42,7 @@ extension UILabel {
         numberOfLines = 0
         textAlignment = .center
         textColor = .black
-        font = AppFont.font(type: .Regular, size: 16)
+       // font = AppFont.font(type: .Regular, size: 16)
         font = UIFont.preferredFont(forTextStyle: .body)
         adjustsFontForContentSizeCategory = true
     }

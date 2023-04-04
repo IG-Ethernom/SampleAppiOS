@@ -1,0 +1,11 @@
+framework module EthHFS {
+  umbrella header "EthHFS.h"
+
+  export *
+  module * { export * }
+}
+
+module EthHFS.Swift {
+  header "EthHFS-Swift.h"
+  requires objc
+}

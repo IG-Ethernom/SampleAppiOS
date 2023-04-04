@@ -22,11 +22,12 @@ class CustomLabel: UILabel {
     private func setup() {
       
         textColor = .black
-        font = AppFont.font(type: .Regular, size: 16)
+       // font = AppFont.font(type: .Regular, size: 16)
         font = UIFont.preferredFont(forTextStyle: .body)
 
         adjustsFontForContentSizeCategory = true
     }
+    
 }
 
 class PaddingLabel: UILabel {

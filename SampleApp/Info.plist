@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth </string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Bluetooth </string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -44,14 +40,7 @@
 		<string>fbshareextension</string>
 	</array>
 	<key>UIAppFonts</key>
-	<array>
-		<string>Nunito-Italic.ttf</string>
-		<string>Nunito-Light.ttf</string>
-		<string>Nunito-Regular.ttf</string>
-		<string>Nunito-SemiBold.ttf</string>
-		<string>Nunito-Medium.ttf</string>
-		<string>Nunito-Bold.ttf</string>
-	</array>
+	<array/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

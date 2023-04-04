@@ -20,6 +20,8 @@ pod "SkeletonView"
 # pod 'Kingfisher', '~> 5.0'
 pod "SDWebImage"
 
+
+#pod "CBPinEntryView"
 # pod 'IQKeyboardManagerSwift'
 
 #  code clean

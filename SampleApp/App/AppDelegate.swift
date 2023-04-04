@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ETHSDK
+import EthHFS
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,6 +43,6 @@ extension AppDelegate {
       //  Thread.sleep(forTimeInterval: 1.0)
         //enable IQ keyboard
        
-        UIViewController.swizzle()
+       // UIViewController.swizzle()
     }
 }

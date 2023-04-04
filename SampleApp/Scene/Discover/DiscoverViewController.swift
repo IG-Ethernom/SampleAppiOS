@@ -8,7 +8,7 @@
 //
 import UIKit
 import CoreBluetooth
-import ETHSDK
+import EthHFS
 
 class DiscoverViewController: BaseViewController {
     var viewModel: DiscoverViewModel?
@@ -38,7 +38,7 @@ class DiscoverViewController: BaseViewController {
         setNavBarAppearance(tintColor: .init(hexString: .colorPrimary), barColor: .init(hexString: .colorPrimary))
     
         //MARK: - INIT ETH SDK and MAKE SCAN FRO CONNECTIVITY
-        ethConnect.initBLEConnection(bleCallBackHandler: self, completion: {
+        ethConnect.InitBLEConnection(bleCallBackHandler: self, completion: {
             ethConnect.EthBLEScan()
         })
 
@@ -51,7 +51,7 @@ class DiscoverViewController: BaseViewController {
       // ethConnect.removeListenerCallBack(msg: "discover")
     }
   //  let device = DeviceModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)
-    var dataLinkDescriptor: [DeviceModel] = [DeviceModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)] {
+    var dataLinkDescriptor: [DeviceModel] = [] {
         didSet {
             uiView.tableView.reloadData()
         }
@@ -90,17 +90,19 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = dataLinkDescriptor[indexPath.row]
         
-       // requestConnectingDevice(device: item)
+        requestConnectingDevice(device: item)
         
-        onConnectionDeviceReady()
+       // onConnectionDeviceReady()
+        
     }
 }
 
 
 //MARK: - ETHConnectivityDeviceDelegate  -----
 extension DiscoverViewController: ETHConnectivityDeviceDelegate {
-    func discoverDeviceCallback(device: [ETHSDK.DeviceModel]) {
-        dataLinkDescriptor = device
+
+    func discoverDeviceCallback(device: [DeviceModel]) {
+         dataLinkDescriptor = device
     }
 
     func onConnectionDeviceReady() {
@@ -112,33 +114,14 @@ extension DiscoverViewController: ETHConnectivityDeviceDelegate {
         hideLoading()
         dataLinkDescriptor.removeAll()
         uiView.tableView.reloadData()
-    
-         
     }
 
-    func disconnectDeviceCallback() {
+    func onDisconnectDevice() {
         print("disconnectDevice from discover")
     }
   
-    func onBluetoothStatus(bleOn: Bool) {
-        print("onBluetoothStatus from discover")
+    func onBluetoothStatus(ble: Bool) {
+        print("onBluetoothStatus from discover \(ble)")
     }
-}
-
-//MARK: - ETHEWalletDataResponseDelegate -----
-extension DiscoverViewController: ETHEWalletDataResponseDelegate {
-
-    func walletResponse(with address: WalletAdressResponse) {
-        if address.status {
-            // TODO: open PIN Screen
-            let controller = VerifyPINViewController()
-            pushToViewController(controller: controller)
-        }else {
-            // TODO: goto create wallet
-        }
-    }
-
-    func ewalletResponseError(_ error: ETHSDK.ErrorCodeResponse) {
-        printLog(tag: "", msg: "error code: \(error.code) message: \(error.message)")
-    }
+    
 }
