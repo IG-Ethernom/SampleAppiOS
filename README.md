@@ -1,4 +1,4 @@
-# CORE iOS MVVM PATTERN
+# Sample iOS Project testing with Ethernom SDK 
 
 
 
