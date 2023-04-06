@@ -17,10 +17,8 @@ class MainCollectViewCells: BaseCollectionViewCell {
         imageThumnail.centerInSuperview(size: CGSize(width: 30, height: 30), y: -20)
         
         let constraint = [
-            titleLabel.topAnchor.constraint(equalTo: imageThumnail.bottomAnchor, constant: 5),
-            titleLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            titleLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
-           // titleLabel.heightAnchor.constraint(equalToConstant: 50),
+            titleLabel.topAnchor.constraint(equalTo: imageThumnail.bottomAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ]
         
         NSLayoutConstraint.activate(constraint)

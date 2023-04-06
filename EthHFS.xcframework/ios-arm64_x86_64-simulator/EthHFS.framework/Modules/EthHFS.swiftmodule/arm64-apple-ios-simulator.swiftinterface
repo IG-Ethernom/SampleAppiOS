@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-compiler-version: Apple Swift version 5.8 (swiftlang-5.8.0.124.1 clang-1403.0.22.11.100)
 // swift-module-flags: -target arm64-apple-ios13.2-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name EthHFS
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import CoreBluetooth
@@ -13,35 +13,28 @@ import _StringProcessing
   @objc override dynamic public init()
   @objc deinit
 }
-@_hasMissingDesignatedInitializers public class DeviceInfo : Swift.Codable {
-  @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
-}
-@_hasMissingDesignatedInitializers public class AppConstant {
-  public static let ERROR_CODE: Swift.String
-  public static let ERROR_MSG: Swift.String
-  public static let CSN: Swift.String
-  public static let DEVICE_NAME: Swift.String
-  public static let MANUFAC_SERIAL_NUMBER: Swift.String
-  public static let CAPSULE_VERSION: Swift.String
-  public static let UUID: Swift.String
-  public static let TYPE: Swift.String
-  public static let MTU: Swift.String
-  public static let BLUETOOTH_DEVICE: Swift.String
-  public static let CAPSULE_INFO: Swift.String
-  public static let CAPSULE_STATUS: Swift.String
-  public static let BLUETOOTH_STATUS: Swift.String
-  public static let TIMEOUT_APP: Swift.String
-  @objc deinit
-}
-public struct EwalletResponse {
-}
 @objc @_hasMissingDesignatedInitializers public class WalletAdressResponse : ObjectiveC.NSObject {
   public var status: Swift.Bool
   public var message: Swift.String?
   public var addess: Swift.String?
   @objc deinit
+}
+public struct SendTrxModel {
+}
+@objc public protocol ETHEWalletDataResponseDelegate {
+  @objc optional func walletAddressResponse(with address: EthHFS.WalletAdressResponse)
+  @objc optional func walletAddressResponseFailure(_ error: EthHFS.ErrorCodeResponse)
+  @objc optional func createWalletSucess(address: Swift.String, pharseKey: Swift.String)
+  @objc optional func createWalletWasFailure(_ error: EthHFS.ErrorCodeResponse)
+  @objc optional func recoverWalletSucess(address: Swift.String, pharseKey: Swift.String)
+  @objc optional func recoverWalletWasFailure(_ error: EthHFS.ErrorCodeResponse)
+  @objc optional func savePasscodeResponseSucess()
+  @objc optional func savePasscodeResponseFailure()
+  @objc optional func verifyInputPinResponse(_ status: Swift.Bool)
+  @objc optional func wipeoutWalletSuccess()
+  @objc optional func wipeoutWalletFailed()
+  @objc optional func deviceWasDisconnect()
+  @objc optional func deviceBluetoothStatus(bleON: Swift.Bool)
 }
 @objc public class DeviceModel : ObjectiveC.NSObject {
   public var deviceName: Swift.String
@@ -54,85 +47,41 @@ public struct EwalletResponse {
   public init(deviceName: Swift.String, mfgSN: Swift.String, uuid: Swift.String, type: Swift.UInt8, mtu: Swift.Int, _ ble: CoreBluetooth.CBPeripheral?, version: Swift.String? = "")
   @objc deinit
 }
-@_hasMissingDesignatedInitializers public class SrvDesc {
-  @objc deinit
-}
 @objc @_inheritsConvenienceInitializers public class EthBLEConnectivity : EthHFS.BaseAO {
   public static var share: EthHFS.EthBLEConnectivity
-  public func initBLEConnection(bleCallBackHandler: EthHFS.ETHConnectivityDeviceDelegate, completion: () -> Swift.Void)
+  weak public var delegate: (any EthHFS.ETHConnectivityDeviceDelegate)?
+  public func InitBLEConnection(bleCallBackHandler: any EthHFS.ETHConnectivityDeviceDelegate, completion: () -> Swift.Void)
   public func EthBLEScan()
+  public func EthBLEReScanDevice()
   public func EthBLEConnection(device: EthHFS.DeviceModel)
   public func EthBLEDisconnect(device: EthHFS.DeviceModel)
   @objc deinit
   @objc override dynamic public init()
 }
-extension Swift.String {
-  public var isNotEmpty: Swift.Bool {
-    get
-  }
-  public func toByteArray() -> [Swift.UInt8]
-}
-extension Swift.StringProtocol {
-  public func chunked(into size: Swift.Int) -> [Self.SubSequence]
-}
 @objc public protocol ETHConnectivityDeviceDelegate {
   @objc func discoverDeviceCallback(device: [EthHFS.DeviceModel])
   @objc func onConnectionDeviceReady()
+  @objc func onBluetoothStatus(bleON: Swift.Bool)
   @objc optional func onConnectionTimeout()
-  @objc optional func disconnectDeviceCallback()
-}
-@objc public protocol BluetoothStatusDelegate {
-  @objc optional func onBluetoothStatus(bleOn: Swift.Bool)
-  @objc optional func disconnectDevice()
-}
-public protocol DisconnectDeviceDelegate : AnyObject {
-  func disconnectDevice()
-}
-extension Swift.Array where Element == Swift.UInt8 {
-  public func toHexString() -> Swift.String
+  @objc optional func onDisconnectDevice()
 }
 extension EthHFS.EthEwalletAPI {
-  public func startEwalletRequest(failure: @escaping (_ timeOut: Swift.Bool) -> Swift.Void)
-  public func requestGetWalletAddress(failure: @escaping (_ timeOut: Swift.Bool) -> Swift.Void)
-  public func verifyPinRequest(pinVerify: Swift.String, failure: @escaping (_ timeOut: Swift.Bool) -> Swift.Void)
-  public func afCheckBalanceRequest(address: Swift.String)
-  public func afWipeOutRequest()
-  public func requestFinishEwallet(failure: @escaping (_ timeOut: Swift.Bool) -> Swift.Void)
-}
-@objc public protocol ETHEWalletDataResponseDelegate {
-  @objc optional func ewalletResponseError(_ error: EthHFS.ErrorCodeResponse)
-  @objc optional func verifyInputPin(_ status: Swift.Bool)
-  @objc optional func walletResponse(with address: EthHFS.WalletAdressResponse)
+  public func EthCreateWalletRqst(failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthRecoverWalletRqst(phraseKey: Swift.String, failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthSavePasscodeRqst(passcode: Swift.String, failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthGetWalletAddressRqst(failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthVerifyPinRqst(passcode: Swift.String, failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthCheckBalanceRequest(address: Swift.String)
+  public func EthSendTransRqst(senderAddresss: Swift.String, trxs: EthHFS.SendTrxModel)
+  public func EthWipeOutRqst(failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
+  public func EthFinishEwalletRqst(failure: ((_ timeOut: Swift.Bool) -> Swift.Void)? = nil)
 }
 @objc @_inheritsConvenienceInitializers public class EthEwalletAPI : EthHFS.BaseAO {
   public static let shared: EthHFS.EthEwalletAPI
-  public func initEwalletService(delegate: EthHFS.ETHEWalletDataResponseDelegate, completion: @escaping () -> Swift.Void)
+  weak public var delegate: (any EthHFS.ETHEWalletDataResponseDelegate)?
+  public func InitEwalletService(delegate: any EthHFS.ETHEWalletDataResponseDelegate, success: (() -> Swift.Void)? = nil, failure: ((_ timeout: Swift.Bool) -> Swift.Void)? = nil)
   @objc override dynamic public init()
   @objc deinit
-}
-@objc @_hasMissingDesignatedInitializers public class SvrBuffer : ObjectiveC.NSObject {
-  @objc deinit
-}
-public enum CapsuleStatus : Swift.String {
-  case ALLOW
-  case DENY
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public let ERROR_CODE_00: Swift.String
-public let ERROR_CODE_01: Swift.String
-public let ERROR_CODE_07: Swift.String
-public enum CmType : Swift.Int {
-  case capsule
-  case server
-  public init?(rawValue: Swift.Int)
-  public typealias RawValue = Swift.Int
-  public var rawValue: Swift.Int {
-    get
-  }
 }
 @objc @_hasMissingDesignatedInitializers public class ErrorCodeResponse : ObjectiveC.NSObject {
   public var code: Swift.String
@@ -148,9 +97,3 @@ public enum CmType : Swift.Int {
   @objc override dynamic public init()
   @objc deinit
 }
-extension EthHFS.CapsuleStatus : Swift.Equatable {}
-extension EthHFS.CapsuleStatus : Swift.Hashable {}
-extension EthHFS.CapsuleStatus : Swift.RawRepresentable {}
-extension EthHFS.CmType : Swift.Equatable {}
-extension EthHFS.CmType : Swift.Hashable {}
-extension EthHFS.CmType : Swift.RawRepresentable {}

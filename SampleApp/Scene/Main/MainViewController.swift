@@ -7,6 +7,7 @@
 
 import UIKit
 import EthHFS
+import CoreBluetooth
 
 class MainViewController: BaseViewController {
     struct FeatureModel {
@@ -24,14 +25,12 @@ class MainViewController: BaseViewController {
     }
     
     let mainView = MainWalletView()
+    var ethConnectAPI: EthBLEConnectivity?
+    
     private var walletAddress = ""
     var featureItem = [
         FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
         FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
-        FeatureModel(type: .DOB, name: "Device Onboard", icon: "login"),
-        FeatureModel(type: .DM, name: "Device Manager", icon: "setting"),
-        FeatureModel(type: .DM, name: "Device Maintenance", icon: "category"),
-        FeatureModel(type: .DIS, name: "Disconnect Device", icon: "bluetooth"),
     ]
     override func loadView() {
         view = mainView
@@ -41,15 +40,50 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         
         setNavBarAppearance(tintColor: .init(hexString: .colorPrimary), barColor: .init(hexString: .colorPrimary))
+    
+        mainView.myCollectionView.dataSource = self
+        mainView.myCollectionView.delegate = self
         
-        mainView.tableView.register(cellWithClass: EwalletCell.self)
-        
-        mainView.tableView.dataSource = self
-        mainView.tableView.delegate = self
-        
-        navigationItem.title = "Main Dashboard"
+        setupDefaultNavigation(title: "Main Dashboard", tint: .black)
+    }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+
+            if parent == nil {
+                debugPrint("Back Button pressed.")
+                
+            }
         
     }
+    
+    override func setupDefaultNavigation(title: String, tint: UIColor? = .white) {
+        navigationItem.title = title
+        let disconnect = UIBarButtonItem(image: UIImage(named: "bluetooth"), style: .plain, target: self, action:  #selector(handleDisconnectDevice))
+      
+        navigationItem.rightBarButtonItems = [disconnect]
+    }
+    
+    @objc func handleDisconnectDevice() {
+        showLoading(message: "Disconnecting device")
+        let deviceInfo = ApplicationSession.shareInstance.getCurrentDeviceInfo()
+        let device = DeviceModel(deviceName: deviceInfo!.deviceName, mfgSN: deviceInfo!.mfgSN, uuid: deviceInfo!.uuid, type: 0, mtu: 0, nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            self.ethConnectAPI?.EthBLEDisconnect(device: device)
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.gobacktoDiscover()
+        })
+    }
+    
+    func gobacktoDiscover() {
+        hideLoading()
+        printLog(tag: "", msg: "Disconnect from main")
+        self.navigationController?.backToViewController(viewController: DiscoverViewController.self)
+    }
+    
     override func enableSwap() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -57,70 +91,19 @@ class MainViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // self.navigationController?.isNavigationBarHidden = true
-        // remove left buttons (in case you added some)
+        
         self.navigationItem.leftBarButtonItems = []
         // hide the default back buttons
         self.navigationItem.hidesBackButton = true
         
     }
     
-    
-    override func setupCustomNavigationBar(title: String) {
-        
-        view.addSubview(navigationMain)
-        navigationMain.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: CGSize(width: 0, height: Int(navBarHeight)))
-        if !title.isEmpty {
-            navigationMain.titleLabel.text = title
-        }
-    }
-    
-    lazy var navigationMain: MainNavigationBarView = {
-        let nav = MainNavigationBarView()
-        nav.translatesAutoresizingMaskIntoConstraints = false
-        nav.backgroundColor = .init(hexString: .colorPrimary)
-        return nav
-    }()
-}
-// MARK: - UITableViewDataSource
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return featureItem.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withClass: EwalletCell.self)
-        let item = featureItem[indexPath.row]
-        
-        cell.titleLabel.text = item.name
-        cell.itemImage.image = UIImage(named: item.icon)
-        
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.init(hexString: "#ECEFF1")
-        cell.selectedBackgroundView = bgColorView
-        
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-}
-
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        operateFeature(item: featureItem[indexPath.row])
-    }
-    
+    var ethEwalletAPI: EthEwalletAPI?
     func operateFeature(item: FeatureModel) {
         switch item.type {
             
         case .EWL:
-            let controller = EwalletViewController()
-            controller.navigationController?.isNavigationBarHidden = false
-            pushToViewController(controller: controller)
+           requestEwalletService()
         case .HFS:
             print("HFS")
             break
@@ -132,6 +115,52 @@ extension MainViewController: UITableViewDelegate {
             break
         }
     }
+    
+    func requestEwalletService() {
+        //MARK: INIT EWALLET SERVICE and REQUEST EWALLET
+        ethEwalletAPI = EthEwalletAPI()
+        
+        showLoading(message: "Ewallet Request")
+        ethEwalletAPI?.InitEwalletService(delegate: self, failure: {timeout in
+            self.printLog(tag: "", msg: "timeout")
+        })
+        
+    }
+    
 }
 
-
+extension MainViewController: ETHEWalletDataResponseDelegate {
+    
+    func walletAddressResponse(with address: WalletAdressResponse) {
+        if address.status == true {
+            // TODO: Request verify pin
+            gotoVerifyPin(wallet: address.addess!)
+        }else {
+            //TODO: Create wallet request
+            gotoewallet(walletAddress: "")
+        }
+    }
+     
+    func walletAddressResponseFailure(_ error: ErrorCodeResponse) {
+        
+    }
+    
+    func gotoVerifyPin(wallet: String) {
+     
+        let controller = ValidatePINViewController()
+        controller.navigationController?.isNavigationBarHidden = false
+        controller.walletAddress = wallet
+        controller.ethEwalletAPI = ethEwalletAPI
+        pushToViewController(controller: controller)
+    }
+    
+    func gotoewallet(walletAddress: String) {
+        hideLoading()
+        let controller = EwalletViewController()
+        controller.navigationController?.isNavigationBarHidden = false
+        controller.walletAddress = walletAddress
+        controller.ethEwalletAPI = ethEwalletAPI
+        pushToViewController(controller: controller)
+    }
+  
+}

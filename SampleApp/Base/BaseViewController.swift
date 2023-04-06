@@ -61,10 +61,10 @@ class BaseViewController: UIViewController {
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().tintColor = tintColor
+      //  UINavigationBar.appearance().tintColor = tintColor
         
-        navigationItem.leftBarButtonItem?.tintColor = .white
-        navigationItem.rightBarButtonItem?.tintColor = .white
+      //  navigationItem.leftBarButtonItem?.tintColor = .white
+       // navigationItem.rightBarButtonItem?.tintColor = .white
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

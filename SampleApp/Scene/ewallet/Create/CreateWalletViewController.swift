@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import EthHFS
 
-class CreateWalletViewController: BaseViewController {
-
+class CreateWalletViewController: BaseViewController, ETHEWalletDataResponseDelegate{
     let cView = CreateWalletView()
     var pharseKey = ""
+    var ethEwalletAPI: EthEwalletAPI?
+    var walletAddress = ""
     override func loadView() {
         view = cView
     }
@@ -22,17 +24,29 @@ class CreateWalletViewController: BaseViewController {
         setupDefaultNavigation(title: "Create Wallet", tint: .black)
         
         cView.pharseKeyView.titleLabel.text = pharseKey
-    }
-    
-    override func setupDefaultNavigation(title: String, tint: UIColor? = .white) {
-        let backButton = UIBarButtonItem(image: UIImage(named: "closesquare"), style: .plain, target: self, action:  #selector(handleDismiss))
-        navigationItem.leftBarButtonItem = backButton
-        navigationItem.title = title
         
-        navigationItem.leftBarButtonItem?.tintColor = tint
+        ethEwalletAPI?.delegate = self
+        
+        cView.descView.conButton.addTarget(self, action: #selector(handleCreate), for: .touchUpInside)
+    }
+   
+    @objc func handleCreate() {
+        gotoVerifyPin(wallet: walletAddress)
     }
     
-    @objc func handleDismiss() {
-        dismiss(animated: true)
+    func gotoVerifyPin(wallet: String) {
+     
+        let controller = ValidatePINViewController()
+        controller.navigationController?.isNavigationBarHidden = false
+        controller.walletAddress = walletAddress
+        controller.ethEwalletAPI = ethEwalletAPI
+        controller.fromCreateWallet = true
+        pushToViewController(controller: controller)
     }
+    
+    func deviceWasDisconnect() {
+        
+    }
+
 }
+

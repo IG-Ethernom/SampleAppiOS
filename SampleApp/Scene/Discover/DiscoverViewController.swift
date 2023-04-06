@@ -15,7 +15,8 @@ class DiscoverViewController: BaseViewController {
     var uiView = DiscoverUIView()
     
     let ethConnect = EthBLEConnectivity.share
- 
+
+    var goingForwards = false
     override func loadView() {
         view = uiView
     }
@@ -41,16 +42,34 @@ class DiscoverViewController: BaseViewController {
         ethConnect.InitBLEConnection(bleCallBackHandler: self, completion: {
             ethConnect.EthBLEScan()
         })
-
+        
+        ethConnect.delegate = self
+    }
+  
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        goingForwards = true
+        
+        print("viewWillDisappear")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if goingForwards {
+            goingForwards = false
+            
+            ethConnect.EthBLEReScanDevice()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel = nil
         
-      // ethConnect.removeListenerCallBack(msg: "discover")
     }
-  //  let device = DeviceModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)
+    
+    let device = DeviceModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)
     var dataLinkDescriptor: [DeviceModel] = [] {
         didSet {
             uiView.tableView.reloadData()
@@ -60,6 +79,8 @@ class DiscoverViewController: BaseViewController {
     func requestConnectingDevice(device: DeviceModel) {
         printLog(tag: "", msg: "requestConnectingDevice \(device.deviceName)")
         
+        let curdevice = DeviceInfo(deviceName: device.deviceName, mfgSN: device.mfgSN, uuid: device.uuid)
+        saveDevice(device: curdevice)
         // save current capsule device
         showLoading(message: LanguageString.CONNECTING_TO.LOCALIZE_STRING)
         ethConnect.EthBLEConnection(device: device)
@@ -90,9 +111,7 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = dataLinkDescriptor[indexPath.row]
         
-        requestConnectingDevice(device: item)
-        
-       // onConnectionDeviceReady()
+         requestConnectingDevice(device: item)
         
     }
 }
@@ -100,13 +119,13 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: - ETHConnectivityDeviceDelegate  -----
 extension DiscoverViewController: ETHConnectivityDeviceDelegate {
-
     func discoverDeviceCallback(device: [DeviceModel]) {
          dataLinkDescriptor = device
     }
 
     func onConnectionDeviceReady() {
         let controller = MainViewController()
+        controller.ethConnectAPI = ethConnect
         pushToViewController(controller: controller)
     }
 
@@ -117,11 +136,27 @@ extension DiscoverViewController: ETHConnectivityDeviceDelegate {
     }
 
     func onDisconnectDevice() {
-        print("disconnectDevice from discover")
+        print("Disconnect from discover")
+        dataLinkDescriptor.removeAll()
+        uiView.tableView.reloadData()
+        
     }
   
-    func onBluetoothStatus(ble: Bool) {
-        print("onBluetoothStatus from discover \(ble)")
+    func onBluetoothStatus(bleON: Bool) {
+        print("onBluetoothStatus from discover \(bleON)")
+        if !bleON {
+            uiView.bluetoothView.isHidden = false
+            uiView.footerView.isHidden = true
+        }else {
+            ethConnect.EthBLEReScanDevice()
+            
+            uiView.footerView.isHidden = false
+            uiView.bluetoothView.isHidden = true
+        }
     }
+   
     
+    func saveDevice(device: DeviceInfo) {
+        ApplicationSession.shareInstance.setCurrentDeviceInfo(value: device)
+    }
 }

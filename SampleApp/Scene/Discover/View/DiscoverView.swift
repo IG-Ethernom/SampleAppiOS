@@ -14,17 +14,25 @@ class DiscoverUIView: BaseView {
     }
     
     func setupTableView() {
-        addSubview(headerView)
-        addSubview(tableView)
-        addSubview(footerView)
+        addSubviews([headerView,tableView,footerView,bluetoothView])
         
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor)
         headerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        tableView.anchor(top: headerView.bottomAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor)
+        tableView.anchor(top: headerView.bottomAnchor, leading: self.leadingAnchor, bottom: bluetoothView.topAnchor, trailing: self.trailingAnchor)
         
-        footerView.anchor(top: tableView.bottomAnchor, leading: self.leadingAnchor, bottom: self.bottomAnchor, trailing: self.trailingAnchor)
+        
+        bluetoothView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        bluetoothView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        bluetoothView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        bluetoothView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        
+        footerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        footerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        footerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         footerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
     }
     
     var tableView: UITableView = {
@@ -42,10 +50,21 @@ class DiscoverUIView: BaseView {
         return view
     }()
     
-    private lazy var footerView: DeviceFooterView = {
+    lazy var bluetoothView: BluetoothFooterView = {
+        let view = BluetoothFooterView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .init(hexString: "#EF5350")
+        view.isHidden = true
+        view.layoutIfNeeded()
+        return view
+    }()
+    
+    lazy var footerView: DeviceFooterView = {
         let view = DeviceFooterView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .init(hexString: .colorPrimary)
+        
+        view.layoutIfNeeded()
         return view
     }()
 }
@@ -111,6 +130,54 @@ class DeviceFooterView: BaseView {
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "infocircle")
+        return image
+    }()
+}
+
+
+class BluetoothFooterView: BaseView {
+    override func setupUI() {
+        let view = [titleLabel,descLabel, image]
+        addSubviews(view)
+       
+        let height = descLabel.heightForView(text: descLabel.text!, width: UIScreen.main.bounds.width - 40)
+        
+        titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        
+        descLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
+        descLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        descLabel.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -10).isActive = true
+        descLabel.heightAnchor.constraint(equalToConstant: height).isActive = true
+        
+        image.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        image.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        
+    }
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.setLabel(title: LanguageString.TURN_ON_BLUETOOTH.LOCALIZE_STRING)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textAlignment = .left
+        label.textColor = .white
+        return label
+    }()
+    
+    private lazy var descLabel: UILabel = {
+        let label = UILabel()
+        label.setLabel(title: LanguageString.TURN_ON_BLUETOOTH_DESC.LOCALIZE_STRING)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .left
+        label.textColor = .white
+        return label
+    }()
+    
+    private lazy var image: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "arrowright2")
         return image
     }()
 }

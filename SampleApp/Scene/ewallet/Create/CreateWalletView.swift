@@ -33,7 +33,7 @@ class CreateWalletView: BaseView {
         return view
     }()
 
-    private lazy var descView: DescCreateWalletView = {
+    lazy var descView: DescCreateWalletView = {
         let view = DescCreateWalletView()
         view.backgroundColor = .init(hexString: .colorBackground)
         return view

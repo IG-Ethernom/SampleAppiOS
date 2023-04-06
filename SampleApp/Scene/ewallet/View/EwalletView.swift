@@ -10,7 +10,7 @@ import SkeletonView
 
 class EwalletView: BaseView {
     override func setupView() {
-        let sView = [tableView,headerView]
+        let sView = [tableView,headerView,noEwalletView]
         addSubviews(sView)
         
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
@@ -24,6 +24,13 @@ class EwalletView: BaseView {
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
             
         ])
+        
+        NSLayoutConstraint.activate([
+            noEwalletView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            noEwalletView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            noEwalletView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            noEwalletView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
     }
   
     var tableView: UITableView = {
@@ -31,6 +38,12 @@ class EwalletView: BaseView {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .white
         return table
+    }()
+    
+    var noEwalletView: NoWalletView = {
+        let view = NoWalletView()
+        view.isHidden = true
+        return view
     }()
     
     lazy var headerView: EWalletHeaderView = {
@@ -42,13 +55,21 @@ class EwalletView: BaseView {
         return view
     }()
     
+    func hideTableView(noWallet: Bool) {
+        headerView.isHidden = noWallet ? true : false
+        tableView.isHidden = noWallet ? true : false
+        
+        noEwalletView.isHidden =  noWallet ? false : true
+        
+         tableView.reloadData()
+    }
+  
 }
 
 class PinInputView: BaseView {
     override func setupUI() {
-        addSubview(pinView)
-        addSubview(descLabel)
-        
+        addSubviews([pinView,descLabel])
+    
         descLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
         descLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive = true
         descLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
@@ -59,7 +80,7 @@ class PinInputView: BaseView {
         pinView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         pinView.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
-    
+ 
     lazy var descLabel: CustomLabel = {
         let label = CustomLabel()
         label.text = "Please enter your pin code to verify the wallet"
@@ -185,18 +206,22 @@ class EwalletCell: BaseTableViewCell {
 
 class NoWalletView: BaseView {
     override func setupView() {
-        let view = [createEwallet, descLabel,recoverEwallet]
-        addSubviews(view)
+        addSubviews([EmptyWallet,createEwallet, descLabel,recoverEwallet])
         
-        let height = heightForView(text: descLabel.text!, width: UIScreen.main.bounds.width - 40)
+        let height = descLabel.heightForView(text: descLabel.text!, width: UIScreen.main.bounds.width - 40)
         NSLayoutConstraint.activate([
             
-            descLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            EmptyWallet.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            EmptyWallet.centerXAnchor.constraint(equalTo: centerXAnchor),
+            EmptyWallet.widthAnchor.constraint(equalToConstant: 100),
+            EmptyWallet.heightAnchor.constraint(equalToConstant: 100),
+            
+            descLabel.topAnchor.constraint(equalTo: EmptyWallet.bottomAnchor, constant: 20),
             descLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             descLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             descLabel.heightAnchor.constraint(equalToConstant: height),
             
-            createEwallet.topAnchor.constraint(equalTo: descLabel.bottomAnchor, constant: 30),
+            createEwallet.topAnchor.constraint(equalTo: descLabel.bottomAnchor, constant: 50),
             createEwallet.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             createEwallet.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20),
             createEwallet.heightAnchor.constraint(equalToConstant: 50),
@@ -211,7 +236,15 @@ class NoWalletView: BaseView {
         setNeedsLayout()
     }
     
-    lazy var descLabel: UILabel = {
+    private lazy var EmptyWallet: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "emptyBox")
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
+        return image
+    }()
+    
+    private lazy var descLabel: UILabel = {
         let label = UILabel()
         label.text = LanguageString.EMPTY_WALLET.LOCALIZE_STRING
         label.textColor = .black
@@ -223,18 +256,7 @@ class NoWalletView: BaseView {
         return label
     }()
     
-    func heightForView(text: String, width:CGFloat) -> CGFloat{
-       let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
-       label.numberOfLines = 0
-       label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.font = UIFont.systemFont(ofSize: 18)
-       label.text = text
-
-       label.sizeToFit()
-       return label.frame.height
-   }
-    
-    let createEwallet: UIButton = {
+    lazy var createEwallet: UIButton = {
         let button = UIButton()
         button.title = "Create Wallet"
         button.layer.cornerRadius = 10
@@ -243,7 +265,7 @@ class NoWalletView: BaseView {
         return button
     }()
     
-    let recoverEwallet: UIButton = {
+    lazy var recoverEwallet: UIButton = {
         let button = UIButton()
         button.title = "Recover Wallet"
         button.layer.cornerRadius = 10

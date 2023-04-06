@@ -10,6 +10,10 @@ import UIKit
 class MainWalletView: BaseView {
     
     override func setupView() {
+        setupviewItem()
+    }
+  
+    func setupTable() {
         let sView = [tableView]
         addSubviews(sView)
         
@@ -22,11 +26,12 @@ class MainWalletView: BaseView {
             
         ])
     }
-  
     var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .white
+        table.register(cellWithClass: EwalletCell.self)
+         
         return table
     }()
     
@@ -44,7 +49,7 @@ class MainWalletView: BaseView {
     
     let myCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         
         layout.minimumLineSpacing = 10.0
@@ -55,6 +60,7 @@ class MainWalletView: BaseView {
         collectionview.showsHorizontalScrollIndicator = false
         collectionview.showsVerticalScrollIndicator = false
         collectionview.isScrollEnabled = true
+        collectionview.register(cell: MainCollectViewCells.self)
         return collectionview
     }()
 }
@@ -86,8 +92,8 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
                         UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width  = (view.frame.width-30)/2
-        return CGSize(width: width, height: 120)
+        let width  = (view.frame.width-20)
+        return CGSize(width: width, height: 100)
     }
 }
 //MARK: - UICollectionViewDelegate
@@ -99,3 +105,41 @@ extension MainViewController: UICollectionViewDelegate {
     
     
 }
+
+
+// MARK: - UITableViewDataSource
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return featureItem.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withClass: EwalletCell.self)
+        let item = featureItem[indexPath.row]
+        
+        cell.titleLabel.text = item.name
+        cell.itemImage.image = UIImage(named: item.icon)
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.init(hexString: "#ECEFF1")
+        cell.selectedBackgroundView = bgColorView
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+}
+
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        operateFeature(item: featureItem[indexPath.row])
+    }
+    
+    
+}
+
+

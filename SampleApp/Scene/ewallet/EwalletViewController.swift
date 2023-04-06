@@ -10,11 +10,9 @@ import EthHFS
 import SkeletonView
 
 class EwalletViewController: BaseViewController {
-    
     let eView = EwalletView()
     var walletAddress = ""
-    var ethEwallet = EthEwalletAPI.shared
-    var noEwalletExist = true
+    var ethEwalletAPI: EthEwalletAPI?
     
     struct FeatureModel {
         var type: FeatureType
@@ -37,7 +35,7 @@ class EwalletViewController: BaseViewController {
         FeatureModel(type: .WIPE, icon: "closesquare"),
     ]
     
-    var ewalletFeatureItem: [FeatureModel] = [] {
+    var ewalletFeatureItem: [FeatureModel] =  [] {
         didSet {
             eView.tableView.reloadData()
         }
@@ -58,25 +56,55 @@ class EwalletViewController: BaseViewController {
         
         eView.tableView.dataSource = self
         eView.tableView.delegate = self
+       
+        //MARK: Extense ewallet callback
+        ethEwalletAPI?.delegate = self
         
+        if walletAddress == "" {
+            eView.hideTableView(noWallet: true)
+        }else {
+            eView.hideTableView(noWallet: false)
+            eView.headerView.hideSkeleton()
+            ewalletFeatureItem = ewalletFeature
+           
+        }
         
-        requestEwalletService()
+        eView.noEwalletView.createEwallet.addTarget(self, action: #selector(createEWallet), for: .touchUpInside)
+        
+        eView.noEwalletView.recoverEwallet.addTarget(self, action: #selector(recoverEWallet), for: .touchUpInside)
     }
     
-    func requestEwalletService() {
-        
-        //MARK: INIT EWALLET SERVICE and REQUEST EWALLET
-        
-        showLoading(message: "Ewallet Request")
-        ethEwallet.InitEwalletService(delegate: self, failure: {timeout in
-            self.printLog(tag: "", msg: "timeout")
-        })
-        
+    override func handleBackButton() {
+        self.navigationController?.backToViewController(viewController: MainViewController.self)
+    }
+    
+    func featureItem() {
+        if walletAddress == "" {
+            let view = NoWalletView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            
+            eView.headerView.isHidden = true
+            eView.tableView.backgroundView = view
+            eView.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+           
+        }else {
+            eView.headerView.isHidden = true
+            let pinview = PinInputView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+            eView.tableView.backgroundView = pinview
+            eView.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+           
+            pinview.pinView.didFinishedEnterCode = {[self] code in
+                print("code is:\(code)")
+                showLoading(message: "Verify pin")
+                ethEwalletAPI?.EthVerifyPinRqst(passcode: code)
+                
+            }
+            
+        }
     }
     
     @objc func createEWallet() {
         showLoading(message: "Creating Wallet")
-        ethEwallet.EthCreateWalletRqst()
+        ethEwalletAPI?.EthCreateWalletRqst()
        
     }
     
@@ -84,45 +112,14 @@ class EwalletViewController: BaseViewController {
         //TODO: Open screen to recover wallet
         showLoading(message: "Recover Wallet")
         let pharseKey = "ripple,onion,adjust,between,glass,risk,world,acoustic,jeans,panel,apart,north"
-        ethEwallet.EthRecoverWalletRqst(phraseKey: pharseKey)
+        ethEwalletAPI?.EthRecoverWalletRqst(phraseKey: pharseKey)
     }
 }
 
 // MARK: - UITableViewDataSource
 extension EwalletViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if ewalletFeatureItem.count == 0  {
-            if noEwalletExist {
-                let view = NoWalletView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-                
-               
-                view.createEwallet.addTarget(self, action: #selector(createEWallet), for: .touchUpInside)
-                
-                view.recoverEwallet.addTarget(self, action: #selector(recoverEWallet), for: .touchUpInside)
-                
-                eView.headerView.isHidden = true
-                eView.tableView.backgroundView = view
-                eView.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-               
-                return 0
-            }else {
-                eView.headerView.isHidden = true
-                let pinview = PinInputView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
-                eView.tableView.backgroundView = pinview
-                eView.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-               
-                pinview.pinView.didFinishedEnterCode = {[self] code in
-                    print("code is:\(code)")
-                    showLoading(message: "Verify pin")
-                    ethEwallet.EthVerifyPinRqst(passcode: code)
-                    
-                }
-                
-                return 0
-            }
-        }else {
-            return ewalletFeatureItem.count
-        }
+        return ewalletFeatureItem.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -164,7 +161,7 @@ extension EwalletViewController: UITableViewDelegate {
             break
         case .WIPE:
             showLoading(message: "Wipe out")
-            ethEwallet.EthWipeOutRqst()
+            ethEwalletAPI?.EthWipeOutRqst()
             break
         }
     }
@@ -173,51 +170,31 @@ extension EwalletViewController: UITableViewDelegate {
 
 //MARK: ETHEWalletDataResponseDelegate
 extension EwalletViewController: ETHEWalletDataResponseDelegate {
-    func walletResponse(with address: WalletAdressResponse) {
-       // print("walletResponse \(address.status) \(address.addess)")
-        
-        if address.status == true {
-            // TODO: Request verify pin
-            walletAddress = address.addess ?? ""
-           
-            noEwalletExist = false
-            eView.tableView.reloadData()
-            hideLoading()
-        
-        }else {
-            //TODO: Create wallet request
-            hideLoading()
-            noEwalletExist = true
-        }
-    }
-    
-    func ewalletResponseError(_ error: ErrorCodeResponse) {
-        
-    }
-    
-    func verifyInputPinResponse(_ status: Bool) {
-        print("verifyInputPin \(status)")
-        hideLoading()
-        if status {
-            // TODO: Display feature item to perform ewallet
-            ewalletFeatureItem = ewalletFeature
-            noEwalletExist = false
-        }
-    }
-    
+  
     func createWalletSucess(address: String, pharseKey: String) {
         hideLoading()
        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            let con = CreateWalletViewController()
-            con.pharseKey = pharseKey
-            let controlller = UINavigationController(rootViewController: con)
-          
-            self.present(controlller, animated: true)
+            let controller = CreateWalletViewController()
+            controller.pharseKey = pharseKey
+            controller.walletAddress = address
+            controller.ethEwalletAPI = self.ethEwalletAPI
+            self.pushToViewController(controller: controller)
         })
     }
     
     func wipeoutWalletSuccess() {
         hideLoading()
     }
+}
+
+extension UINavigationController {
+    func backToViewController(viewController: Swift.AnyClass) {
+            for element in viewControllers as Array {
+                if element.isKind(of: viewController) {
+                    self.popToViewController(element, animated: true)
+                    break
+                }
+            }
+        }
 }

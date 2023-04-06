@@ -7,6 +7,17 @@
 
 import UIKit
 extension UILabel {
+    func heightForView(text: String, width:CGFloat) -> CGFloat{
+       let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.greatestFiniteMagnitude))
+       label.numberOfLines = 0
+       label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 18)
+       label.text = text
+
+       label.sizeToFit()
+       return label.frame.height
+   }
+    
     func setRequire(title: String, subTitle: String,index: Int, length: Int) -> NSMutableAttributedString {
         let titleAttribute = [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13),

@@ -17,8 +17,10 @@
 		847B9C6129DBBF3100C59429 /* PasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6029DBBF3100C59429 /* PasscodeView.swift */; };
 		847B9C6329DBBF5D00C59429 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6229DBBF5D00C59429 /* PinView.swift */; };
 		847B9C6B29DBD5A500C59429 /* CreateWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6A29DBD5A500C59429 /* CreateWalletView.swift */; };
-		847B9C7A29DC187800C59429 /* EthHFS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847B9C7829DC186800C59429 /* EthHFS.xcframework */; };
-		847B9C7B29DC187800C59429 /* EthHFS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 847B9C7829DC186800C59429 /* EthHFS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		847B9C7E29DC2CAF00C59429 /* mbedTLS in Frameworks */ = {isa = PBXBuildFile; productRef = 847B9C7D29DC2CAF00C59429 /* mbedTLS */; };
+		847BA66529DE7A7C00C59429 /* ValidatePINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BA66429DE7A7C00C59429 /* ValidatePINViewController.swift */; };
+		847BA66B29DEBE1D00C59429 /* EthHFS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 847BA66929DEBE1800C59429 /* EthHFS.xcframework */; };
+		847BA66C29DEBE1D00C59429 /* EthHFS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 847BA66929DEBE1800C59429 /* EthHFS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		849427EE2977991E00582798 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427ED2977991E00582798 /* AppDelegate.swift */; };
 		849427F02977991E00582798 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427EF2977991E00582798 /* SceneDelegate.swift */; };
 		849427F52977991E00582798 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849427F32977991E00582798 /* Main.storyboard */; };
@@ -123,7 +125,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				847B9C7B29DC187800C59429 /* EthHFS.xcframework in Embed Frameworks */,
+				847BA66C29DEBE1D00C59429 /* EthHFS.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,7 +145,8 @@
 		847B9C6029DBBF3100C59429 /* PasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeView.swift; sourceTree = "<group>"; };
 		847B9C6229DBBF5D00C59429 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		847B9C6A29DBD5A500C59429 /* CreateWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWalletView.swift; sourceTree = "<group>"; };
-		847B9C7829DC186800C59429 /* EthHFS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = EthHFS.xcframework; path = ../EthHFS/XCFramework/xcframeworks/EthHFS.xcframework; sourceTree = "<group>"; };
+		847BA66429DE7A7C00C59429 /* ValidatePINViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePINViewController.swift; sourceTree = "<group>"; };
+		847BA66929DEBE1800C59429 /* EthHFS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = EthHFS.xcframework; sourceTree = "<group>"; };
 		849427EA2977991E00582798 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849427ED2977991E00582798 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		849427EF2977991E00582798 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -238,8 +241,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847B9C7E29DC2CAF00C59429 /* mbedTLS in Frameworks */,
 				A460165553812E2780DE3158 /* Pods_SampleApp.framework in Frameworks */,
-				847B9C7A29DC187800C59429 /* EthHFS.xcframework in Frameworks */,
+				847BA66B29DEBE1D00C59429 /* EthHFS.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +312,7 @@
 			children = (
 				84E56E9F29D7EE2500175C52 /* EwalletView.swift */,
 				847B9C5D29DBBECE00C59429 /* passcode */,
+				847BA66429DE7A7C00C59429 /* ValidatePINViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -315,7 +320,7 @@
 		849427E12977991E00582798 = {
 			isa = PBXGroup;
 			children = (
-				847B9C7829DC186800C59429 /* EthHFS.xcframework */,
+				847BA66929DEBE1800C59429 /* EthHFS.xcframework */,
 				849427EC2977991E00582798 /* SampleApp */,
 				849427EB2977991E00582798 /* Products */,
 				D38215CF7280F8BB45E2BD45 /* Pods */,
@@ -741,6 +746,7 @@
 			);
 			name = SampleApp;
 			packageProductDependencies = (
+				847B9C7D29DC2CAF00C59429 /* mbedTLS */,
 			);
 			productName = "Bamboo Consumer";
 			productReference = 849427EA2977991E00582798 /* SampleApp.app */;
@@ -771,6 +777,7 @@
 			);
 			mainGroup = 849427E12977991E00582798;
 			packageReferences = (
+				847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */,
 			);
 			productRefGroup = 849427EB2977991E00582798 /* Products */;
 			projectDirPath = "";
@@ -895,6 +902,7 @@
 				84E56E9C29D7D8AF00175C52 /* MainNavigationBarView.swift in Sources */,
 				849428B32977AF8200582798 /* CustomLabel.swift in Sources */,
 				849428C92977E60000582798 /* UIButton+Extension.swift in Sources */,
+				847BA66529DE7A7C00C59429 /* ValidatePINViewController.swift in Sources */,
 				84973F1229CD882800063313 /* DiscoverTableViewCell.swift in Sources */,
 				84E56E9E29D7E9BC00175C52 /* EwalletViewController.swift in Sources */,
 				849428352977A28500582798 /* Regex+Extension.swift in Sources */,
@@ -1175,6 +1183,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simplisafe/mbedTLS-iOS.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		847B9C7D29DC2CAF00C59429 /* mbedTLS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */;
+			productName = mbedTLS;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 849427E22977991E00582798 /* Project object */;
 }
