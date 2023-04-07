@@ -19,9 +19,7 @@ class MainViewController: BaseViewController {
     enum FeatureType: String {
         case EWL = "EW"
         case HFS = "HFS"
-        case DOB = "DOB"
-        case DM = "DM"
-        case DIS = "DIS"
+        case NFC = "NFC"
     }
     
     let mainView = MainWalletView()
@@ -31,6 +29,7 @@ class MainViewController: BaseViewController {
     var featureItem = [
         FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
         FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
+        FeatureModel(type: .HFS, name: "NFC Reader", icon: "health"),
     ]
     override func loadView() {
         view = mainView
@@ -107,12 +106,9 @@ class MainViewController: BaseViewController {
         case .HFS:
             print("HFS")
             break
-        case .DOB:
+        case .NFC:
             break
-        case .DM:
-            break;
-        case .DIS:
-            break
+        
         }
     }
     

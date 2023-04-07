@@ -6,39 +6,26 @@
 //
 
 import UIKit
-import SkeletonView
 
 class EwalletView: BaseView {
     override func setupView() {
-        let sView = [tableView,headerView,noEwalletView]
+        let sView = [noEwalletView,walletView]
         addSubviews(sView)
-        
-        headerView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20))
-        headerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor,constant: 10),
-            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-            
-        ])
-        
+      
         NSLayoutConstraint.activate([
             noEwalletView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
             noEwalletView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
             noEwalletView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
             noEwalletView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            walletView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            walletView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            walletView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            walletView.heightAnchor.constraint(equalToConstant: 250),
+        ])
     }
-  
-    var tableView: UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .white
-        return table
-    }()
     
     var noEwalletView: NoWalletView = {
         let view = NoWalletView()
@@ -46,25 +33,15 @@ class EwalletView: BaseView {
         return view
     }()
     
-    lazy var headerView: EWalletHeaderView = {
-        let view = EWalletHeaderView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+    var walletView: EWalletItemView = {
+        let view = EWalletItemView()
         view.backgroundColor = .systemBlue
-        view.layer.cornerRadius = 10
-        view.isSkeletonable = true
+        view.layer.cornerRadius = 20
         return view
     }()
     
-    func hideTableView(noWallet: Bool) {
-        headerView.isHidden = noWallet ? true : false
-        tableView.isHidden = noWallet ? true : false
-        
-        noEwalletView.isHidden =  noWallet ? false : true
-        
-         tableView.reloadData()
-    }
-  
 }
+
 
 class PinInputView: BaseView {
     override func setupUI() {
@@ -100,18 +77,34 @@ class PinInputView: BaseView {
     }()
 }
 
-class EWalletHeaderView: BaseView {
+class EWalletItemView: BaseView {
     override func setupView() {
-        let view = [balanceTitle, balance]
+        let view = [balanceTitle, walletAddress, walletImage]
         addSubviews(view)
+        
+        NSLayoutConstraint.activate([
+            walletImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
+            walletImage.centerXAnchor.constraint(equalTo: centerXAnchor),
+            walletImage.widthAnchor.constraint(equalToConstant: 50),
+            walletImage.heightAnchor.constraint(equalToConstant: 50),
+        ])
+        
         balanceTitle.centerInSuperview(x: 0,y: -20)
-        balance.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        balance.topAnchor.constraint(equalTo: balanceTitle.bottomAnchor, constant: 10).isActive = true
+        walletAddress.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
+        walletAddress.topAnchor.constraint(equalTo: balanceTitle.bottomAnchor, constant: 10).isActive = true
     }
+    
+    private lazy var walletImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "wallet2")
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
+        return image
+    }()
     
     lazy var balanceTitle: CustomLabel = {
         let label = CustomLabel()
-        label.text = "Current Balance"
+        label.text = "E-Wallet"
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
@@ -119,14 +112,12 @@ class EWalletHeaderView: BaseView {
         return label
     }()
     
-    lazy var balance: CustomLabel = {
+    lazy var walletAddress: CustomLabel = {
         let label = CustomLabel()
-        label.text = "$ 12.03"
+        label.text = "mjEYsKY1Rf6guYLfBxBFGa3Kgtz61N5mh2"
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = .black
         label.textAlignment = .center
-        label.isSkeletonable = true
-        label.showSkeleton()
         return label
     }()
 }

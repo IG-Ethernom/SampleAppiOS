@@ -32,7 +32,7 @@ struct WrapperUIViewControllerRepresentable: UIViewControllerRepresentable{
     }
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<WrapperUIViewControllerRepresentable>) -> UIViewController {
-        let viewController = UINavigationController(rootViewController: MainViewController())
+        let viewController = UINavigationController(rootViewController: EwalletViewController())
         return viewController
     }
 }
