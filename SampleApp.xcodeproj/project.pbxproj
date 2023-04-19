@@ -17,7 +17,6 @@
 		847B9C6129DBBF3100C59429 /* PasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6029DBBF3100C59429 /* PasscodeView.swift */; };
 		847B9C6329DBBF5D00C59429 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6229DBBF5D00C59429 /* PinView.swift */; };
 		847B9C6B29DBD5A500C59429 /* CreateWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B9C6A29DBD5A500C59429 /* CreateWalletView.swift */; };
-		847B9C7E29DC2CAF00C59429 /* mbedTLS in Frameworks */ = {isa = PBXBuildFile; productRef = 847B9C7D29DC2CAF00C59429 /* mbedTLS */; };
 		847BA66529DE7A7C00C59429 /* ValidatePINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847BA66429DE7A7C00C59429 /* ValidatePINViewController.swift */; };
 		849427EE2977991E00582798 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427ED2977991E00582798 /* AppDelegate.swift */; };
 		849427F02977991E00582798 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427EF2977991E00582798 /* SceneDelegate.swift */; };
@@ -75,6 +74,7 @@
 		849428C92977E60000582798 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849428C82977E60000582798 /* UIButton+Extension.swift */; };
 		849428CB2977E78C00582798 /* CoreGraphics+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849428CA2977E78C00582798 /* CoreGraphics+Extension.swift */; };
 		849428D22977EE8E00582798 /* UIPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849428D12977EE8E00582798 /* UIPreview.swift */; };
+		8495902029EE9FC0006B6B5A /* EthHFSPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8495901F29EE9FC0006B6B5A /* EthHFSPackage */; };
 		84973EA529CC462D00063313 /* AssociateDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84973E9E29CC462D00063313 /* AssociateDeviceViewModel.swift */; };
 		84973EA629CC462D00063313 /* AssociateDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84973E9F29CC462D00063313 /* AssociateDeviceViewController.swift */; };
 		84973EA929CC462D00063313 /* AssociateDeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84973EA429CC462D00063313 /* AssociateDeviceView.swift */; };
@@ -98,9 +98,6 @@
 		84A3D88D29C2FAB400E0F2B8 /* BaseTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A3D88C29C2FAB400E0F2B8 /* BaseTabBarController.swift */; };
 		84AFD6E929D1388C002345DB /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFD6E829D1388C002345DB /* MainViewController.swift */; };
 		84AFD71129D3DDCD002345DB /* VerifyPINViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFD71029D3DDCD002345DB /* VerifyPINViewController.swift */; };
-		84AFE1F929DFABDF00B0985E /* EthHFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84AFE1F829DFABD300B0985E /* EthHFS.framework */; };
-		84AFE1FA29DFABDF00B0985E /* EthHFS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84AFE1F829DFABD300B0985E /* EthHFS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		84AFE20429DFC81500B0985E /* NFCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AFE20329DFC81500B0985E /* NFCViewController.swift */; };
 		84B58ED829B08CDB00E846AC /* BadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B58ED729B08CDB00E846AC /* BadgeButton.swift */; };
 		84E56E9A29D7D88E00175C52 /* MainCollectViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56E9929D7D88E00175C52 /* MainCollectViewCells.swift */; };
 		84E56E9C29D7D8AF00175C52 /* MainNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56E9B29D7D8AF00175C52 /* MainNavigationBarView.swift */; };
@@ -108,16 +105,6 @@
 		84E56EA029D7EE2500175C52 /* EwalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E56E9F29D7EE2500175C52 /* EwalletView.swift */; };
 		A460165553812E2780DE3158 /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D2049ABC24EC07A645DF7B /* Pods_SampleApp.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		84AFE1F729DFABD300B0985E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 84AFE1F229DFABD300B0985E /* EthHFS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 843EA64929DA81CE00E81E97;
-			remoteInfo = EthHFS;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		8496200129A5EF2C009EB63C /* Embed Foundation Extensions */ = {
@@ -136,7 +123,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				84AFE1FA29DFABDF00B0985E /* EthHFS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,8 +224,6 @@
 		84A3D88C29C2FAB400E0F2B8 /* BaseTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabBarController.swift; sourceTree = "<group>"; };
 		84AFD6E829D1388C002345DB /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		84AFD71029D3DDCD002345DB /* VerifyPINViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPINViewController.swift; sourceTree = "<group>"; };
-		84AFE1F229DFABD300B0985E /* EthHFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EthHFS.xcodeproj; path = ../EthHFS/EthHFS.xcodeproj; sourceTree = "<group>"; };
-		84AFE20329DFC81500B0985E /* NFCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFCViewController.swift; sourceTree = "<group>"; };
 		84B58ED729B08CDB00E846AC /* BadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButton.swift; sourceTree = "<group>"; };
 		84E56E9929D7D88E00175C52 /* MainCollectViewCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectViewCells.swift; sourceTree = "<group>"; };
 		84E56E9B29D7D8AF00175C52 /* MainNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationBarView.swift; sourceTree = "<group>"; };
@@ -253,9 +237,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				847B9C7E29DC2CAF00C59429 /* mbedTLS in Frameworks */,
-				84AFE1F929DFABDF00B0985E /* EthHFS.framework in Frameworks */,
 				A460165553812E2780DE3158 /* Pods_SampleApp.framework in Frameworks */,
+				8495902029EE9FC0006B6B5A /* EthHFSPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,7 +315,6 @@
 		849427E12977991E00582798 = {
 			isa = PBXGroup;
 			children = (
-				84AFE1F229DFABD300B0985E /* EthHFS.xcodeproj */,
 				849427EC2977991E00582798 /* SampleApp */,
 				849427EB2977991E00582798 /* Products */,
 				D38215CF7280F8BB45E2BD45 /* Pods */,
@@ -413,7 +395,6 @@
 		84942806297799D400582798 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				84AFE20229DFC7ED00B0985E /* NFC */,
 				847B9C5729DAE2E100C59429 /* ewallet */,
 				84AFD6B329CF2F73002345DB /* Main */,
 				84973EEB29CD83F900063313 /* Discover */,
@@ -721,22 +702,6 @@
 			path = VerifyPin;
 			sourceTree = "<group>";
 		};
-		84AFE1F329DFABD300B0985E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				84AFE1F829DFABD300B0985E /* EthHFS.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		84AFE20229DFC7ED00B0985E /* NFC */ = {
-			isa = PBXGroup;
-			children = (
-				84AFE20329DFC81500B0985E /* NFCViewController.swift */,
-			);
-			path = NFC;
-			sourceTree = "<group>";
-		};
 		D38215CF7280F8BB45E2BD45 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -775,7 +740,7 @@
 			);
 			name = SampleApp;
 			packageProductDependencies = (
-				847B9C7D29DC2CAF00C59429 /* mbedTLS */,
+				8495901F29EE9FC0006B6B5A /* EthHFSPackage */,
 			);
 			productName = "Bamboo Consumer";
 			productReference = 849427EA2977991E00582798 /* SampleApp.app */;
@@ -806,32 +771,16 @@
 			);
 			mainGroup = 849427E12977991E00582798;
 			packageReferences = (
-				847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */,
+				8495901E29EE9FC0006B6B5A /* XCRemoteSwiftPackageReference "EthHFSPackage" */,
 			);
 			productRefGroup = 849427EB2977991E00582798 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 84AFE1F329DFABD300B0985E /* Products */;
-					ProjectRef = 84AFE1F229DFABD300B0985E /* EthHFS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				849427E92977991E00582798 /* SampleApp */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		84AFE1F829DFABD300B0985E /* EthHFS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = EthHFS.framework;
-			remoteRef = 84AFE1F729DFABD300B0985E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		849427E82977991E00582798 /* Resources */ = {
@@ -953,7 +902,6 @@
 				849428352977A28500582798 /* Regex+Extension.swift in Sources */,
 				843A943A29783C5900FDA150 /* URLSession+Extension.swift in Sources */,
 				849428BD2977D3D700582798 /* BaseCollectionViewCell.swift in Sources */,
-				84AFE20429DFC81500B0985E /* NFCViewController.swift in Sources */,
 				84973F0229CD84F500063313 /* DiscoverViewController.swift in Sources */,
 				8494285E2977A3CE00582798 /* HTTPMethod.swift in Sources */,
 				84973F0B29CD84FE00063313 /* DiscoverView.swift in Sources */,
@@ -1231,21 +1179,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */ = {
+		8495901E29EE9FC0006B6B5A /* XCRemoteSwiftPackageReference "EthHFSPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/simplisafe/mbedTLS-iOS.git";
+			repositoryURL = "https://github.com/IG-Ethernom/EthHFSPackage.git";
 			requirement = {
-				branch = master;
+				branch = hfs_secure_connection;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		847B9C7D29DC2CAF00C59429 /* mbedTLS */ = {
+		8495901F29EE9FC0006B6B5A /* EthHFSPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 847B9C7C29DC2CAF00C59429 /* XCRemoteSwiftPackageReference "mbedTLS-iOS" */;
-			productName = mbedTLS;
+			package = 8495901E29EE9FC0006B6B5A /* XCRemoteSwiftPackageReference "EthHFSPackage" */;
+			productName = EthHFSPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

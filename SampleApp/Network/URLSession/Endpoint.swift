@@ -10,12 +10,8 @@ import Foundation
 
 //MARK: - MOCKUP API REQUEST
 extension Endpoint {
-    static func sts3Init(_ body: HTTPBody) -> Self {
-        Endpoint(path: "/sts/initial3", method: .post(body))
-    }
-    
-    static func stsInit(data: STSInitServerRequestBody) -> Self {
-        Endpoint(path: "/sts/initial", queryItems: [URLQueryItem(name: "reqTempPublicKey", value: data.reqTempPublicKey)], method: .post(nil))
+    static func companyList(_ body: HTTPBody) -> Self {
+        Endpoint(path: "/company/list", method: .post(body))
     }
 }
 
@@ -48,18 +44,7 @@ struct Endpoint {
         }
         return components
     }
-    
-    private var testUrl: URLComponents {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "3767-202-178-125-116.ap.ngrok.io"
-        components.path = path
-        if !queryItems.isEmpty {
-            components.queryItems = queryItems
-        }
-        return components
-    }
-    
+  
     private var productionUrl: URLComponents {
         var components = URLComponents()
         components.scheme = "http"
@@ -71,33 +56,12 @@ struct Endpoint {
         }
         return components
     }
-    
-    private var intergrationUrl: URLComponents {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "www.googleapis.com"
-        components.path = path
-        if !queryItems.isEmpty {
-            components.queryItems = queryItems
-        }
-        return components
-    }
-    
-    private var mockUpAPI: URLComponents {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "my.api.mockaroo.com"
-        components.path = path
-        if !queryItems.isEmpty {
-            components.queryItems = queryItems
-        }
-        return components
-    }
+  
     /**
      Base url where app will connect to
      */
     var url: URL {
-        return mockUpAPI.url!
+        return productionUrl.url!
     }
     
 }

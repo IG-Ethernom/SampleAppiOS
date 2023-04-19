@@ -8,13 +8,13 @@
 //
 import UIKit
 import CoreBluetooth
-import EthHFS
+import EthHFSPackage
 
 class DiscoverViewController: BaseViewController {
     var viewModel: DiscoverViewModel?
     var uiView = DiscoverUIView()
     
-    let ethConnect = EthBLEConnectivity.share
+    let ethConnect = EthHFSPackage()
 
     var goingForwards = false
     override func loadView() {
@@ -43,7 +43,7 @@ class DiscoverViewController: BaseViewController {
             ethConnect.EthBLEScan()
         })
         
-        ethConnect.delegate = self
+       // ethConnect.delegate = self
     }
   
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,21 +69,21 @@ class DiscoverViewController: BaseViewController {
         
     }
     
-    let device = DeviceModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)
-    var dataLinkDescriptor: [DeviceModel] = [] {
+    let device = DeviceItemModel(deviceName: "ETHERNOM", mfgSN: "0132141235", uuid: "", type: 0, mtu: 0, nil)
+    var dataLinkDescriptor: [DeviceItemModel] = [] {
         didSet {
             uiView.tableView.reloadData()
         }
     }
     
-    func requestConnectingDevice(device: DeviceModel) {
+    func requestConnectingDevice(device: DeviceItemModel) {
         printLog(tag: "", msg: "requestConnectingDevice \(device.deviceName)")
         
         let curdevice = DeviceInfo(deviceName: device.deviceName, mfgSN: device.mfgSN, uuid: device.uuid)
         saveDevice(device: curdevice)
         // save current capsule device
         showLoading(message: LanguageString.CONNECTING_TO.LOCALIZE_STRING)
-        ethConnect.EthBLEConnection(device: device)
+        ethConnect.EthBLESecureConnection(device: device)
     }
 }
 
@@ -118,15 +118,17 @@ extension DiscoverViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 //MARK: - ETHConnectivityDeviceDelegate  -----
-extension DiscoverViewController: ETHConnectivityDeviceDelegate {
-    func discoverDeviceCallback(device: [DeviceModel]) {
-         dataLinkDescriptor = device
+extension DiscoverViewController: _ETHConnectivityDeviceDelegate {
+    func discoverDeviceCallback(device: [DeviceItemModel]) {
+        dataLinkDescriptor = device
     }
-
+    
     func onConnectionDeviceReady() {
-        let controller = MainViewController()
-        controller.ethConnectAPI = ethConnect
-        pushToViewController(controller: controller)
+        hideLoading()
+        DispatchQueue.main.async {
+            let controller = MainViewController()
+            self.pushToViewController(controller: controller)
+        }
     }
 
     func onConnectionTimeout() {

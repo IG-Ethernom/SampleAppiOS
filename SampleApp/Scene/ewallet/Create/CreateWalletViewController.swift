@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import EthHFS
+import EthSDK
 
 class CreateWalletViewController: BaseViewController, ETHEWalletDataResponseDelegate{
     let cView = CreateWalletView()

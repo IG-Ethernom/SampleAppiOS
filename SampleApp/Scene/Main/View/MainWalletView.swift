@@ -66,46 +66,6 @@ class MainWalletView: BaseView {
 }
 
 
-//MARK: - UICollectionViewDataSource
-extension MainViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return featureItem.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(for: indexPath) as MainCollectViewCells
-        cell.layer.cornerRadius = 15
-        cell.backgroundColor = .init(hexString: .colorPrimary)
-        
-       // cell.layer.borderWidth = 1
-        // cell.layer.borderColor = UIColor.init(hexString: .colorPrimary).cgColor
-        
-        
-        let item = featureItem[indexPath.row]
-        cell.titleLabel.text = item.name
-        cell.imageThumnail.image = UIImage(named: item.icon)
-        
-        return cell
-    }
-}
-
-extension MainViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
-                        UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width  = (view.frame.width-20)
-        return CGSize(width: width, height: 100)
-    }
-}
-//MARK: - UICollectionViewDelegate
-extension MainViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // delegate?.openVideoController(data: element, index: indexPath)
-        operateFeature(item: featureItem[indexPath.row])
-    }
-    
-    
-}
-
 
 // MARK: - UITableViewDataSource
 extension MainViewController: UITableViewDataSource {

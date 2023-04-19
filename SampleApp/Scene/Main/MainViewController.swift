@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import EthHFS
 import CoreBluetooth
 
 class MainViewController: BaseViewController {
@@ -19,18 +18,18 @@ class MainViewController: BaseViewController {
     enum FeatureType: String {
         case EWL = "EW"
         case HFS = "HFS"
-        case NFC = "NFC"
+        case DOB = "DOB"
     }
     
     let mainView = MainWalletView()
-    var ethConnectAPI: EthBLEConnectivity?
     
     private var walletAddress = ""
     var featureItem = [
         FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
         FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
-        FeatureModel(type: .HFS, name: "NFC Reader", icon: "health"),
+        FeatureModel(type: .DOB, name: "DOB", icon: "star")
     ]
+    
     override func loadView() {
         view = mainView
     }
@@ -39,7 +38,7 @@ class MainViewController: BaseViewController {
         super.viewDidLoad()
         
         setNavBarAppearance(tintColor: .init(hexString: .colorPrimary), barColor: .init(hexString: .colorPrimary))
-    
+        
         mainView.myCollectionView.dataSource = self
         mainView.myCollectionView.delegate = self
         
@@ -48,28 +47,26 @@ class MainViewController: BaseViewController {
     
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
-
-            if parent == nil {
-                debugPrint("Back Button pressed.")
-                
-            }
         
+        if parent == nil {
+            debugPrint("Back Button pressed.")
+        }
     }
     
     override func setupDefaultNavigation(title: String, tint: UIColor? = .white) {
         navigationItem.title = title
         let disconnect = UIBarButtonItem(image: UIImage(named: "bluetooth"), style: .plain, target: self, action:  #selector(handleDisconnectDevice))
-      
+        
         navigationItem.rightBarButtonItems = [disconnect]
     }
     
     @objc func handleDisconnectDevice() {
         showLoading(message: "Disconnecting device")
         let deviceInfo = ApplicationSession.shareInstance.getCurrentDeviceInfo()
-        let device = DeviceModel(deviceName: deviceInfo!.deviceName, mfgSN: deviceInfo!.mfgSN, uuid: deviceInfo!.uuid, type: 0, mtu: 0, nil)
+       // let device = DeviceModel(deviceName: deviceInfo!.deviceName, mfgSN: deviceInfo!.mfgSN, uuid: deviceInfo!.uuid, type: 0, mtu: 0, nil)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.ethConnectAPI?.EthBLEDisconnect(device: device)
+            //  self.ethConnectAPI?.EthBLEDisconnect(device: device)
         })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
@@ -97,66 +94,62 @@ class MainViewController: BaseViewController {
         
     }
     
-    var ethEwalletAPI: EthEwalletAPI?
     func operateFeature(item: FeatureModel) {
         switch item.type {
             
         case .EWL:
-           requestEwalletService()
+            print("EWL")
+            break;
         case .HFS:
             print("HFS")
             break
-        case .NFC:
-            break
-        
+        case .DOB:
+            print("DOB")
+            break;
         }
     }
     
-    func requestEwalletService() {
-        //MARK: INIT EWALLET SERVICE and REQUEST EWALLET
-        ethEwalletAPI = EthEwalletAPI()
-        
-        showLoading(message: "Ewallet Request")
-        ethEwalletAPI?.InitEwalletService(delegate: self, failure: {timeout in
-            self.printLog(tag: "", msg: "timeout")
-        })
-        
-    }
+    
     
 }
 
-extension MainViewController: ETHEWalletDataResponseDelegate {
-    
-    func walletAddressResponse(with address: WalletAdressResponse) {
-        if address.status == true {
-            // TODO: Request verify pin
-            gotoVerifyPin(wallet: address.addess!)
-        }else {
-            //TODO: Create wallet request
-            gotoewallet(walletAddress: "")
-        }
+
+//MARK: - UICollectionViewDataSource
+extension MainViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return featureItem.count
     }
-     
-    func walletAddressResponseFailure(_ error: ErrorCodeResponse) {
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeue(for: indexPath) as MainCollectViewCells
+        cell.layer.cornerRadius = 15
+        cell.backgroundColor = .init(hexString: .colorPrimary)
         
+        // cell.layer.borderWidth = 1
+        // cell.layer.borderColor = UIColor.init(hexString: .colorPrimary).cgColor
+        
+        
+        let item = featureItem[indexPath.row]
+        cell.titleLabel.text = item.name
+        cell.imageThumnail.image = UIImage(named: item.icon)
+        
+        return cell
+    }
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
+                        UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width  = (view.frame.width-20)
+        return CGSize(width: width, height: 100)
+    }
+}
+//MARK: - UICollectionViewDelegate
+extension MainViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // delegate?.openVideoController(data: element, index: indexPath)
+        operateFeature(item: featureItem[indexPath.row])
     }
     
-    func gotoVerifyPin(wallet: String) {
-     
-        let controller = ValidatePINViewController()
-        controller.navigationController?.isNavigationBarHidden = false
-        controller.walletAddress = wallet
-        controller.ethEwalletAPI = ethEwalletAPI
-        pushToViewController(controller: controller)
-    }
     
-    func gotoewallet(walletAddress: String) {
-        hideLoading()
-        let controller = EwalletViewController()
-        controller.navigationController?.isNavigationBarHidden = false
-        controller.walletAddress = walletAddress
-        controller.ethEwalletAPI = ethEwalletAPI
-        pushToViewController(controller: controller)
-    }
-  
 }
