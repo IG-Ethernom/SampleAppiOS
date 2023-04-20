@@ -7,29 +7,13 @@
 
 import UIKit
 import CoreBluetooth
+import EthHFSPackage
 
 class MainViewController: BaseViewController {
-    struct FeatureModel {
-        var type: FeatureType
-        var name: String
-        var icon: String
-    }
-    
-    enum FeatureType: String {
-        case EWL = "EW"
-        case HFS = "HFS"
-        case DOB = "DOB"
-    }
-    
+    var sessionId = ""
+    var shareKey = ""
     let mainView = MainWalletView()
-    
     private var walletAddress = ""
-    var featureItem = [
-        FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
-        FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
-        FeatureModel(type: .DOB, name: "DOB", icon: "star")
-    ]
-    
     override func loadView() {
         view = mainView
     }
@@ -77,7 +61,7 @@ class MainViewController: BaseViewController {
     func gobacktoDiscover() {
         hideLoading()
         printLog(tag: "", msg: "Disconnect from main")
-        self.navigationController?.backToViewController(viewController: DiscoverViewController.self)
+      //  self.navigationController?.backToViewController(viewController: DiscoverViewController.self)
     }
     
     override func enableSwap() {
@@ -105,14 +89,33 @@ class MainViewController: BaseViewController {
             break
         case .DOB:
             print("DOB")
+            startDeviceOnboard()
             break;
         }
     }
     
-    
+    var ethSDK = EthHFSPackage()
+    func startDeviceOnboard() {
+        ethSDK.InitialDeviceOnboardService(dobCallback: self, sessionId: sessionId, shareSecretKey: shareKey)
+    }
     
 }
 
+extension MainViewController: _ETHDeviceOnboardDelegate {
+    func companyListResponse(_ company: [CompanyResponse]) {
+        print(company)
+    }
+    
+    func deviceOnboardSucessCallback(deviceName: String, csn: String) {
+        print("deviceOnboardSucessCallback")
+    }
+    
+    func deviceOnboardFailureCallback(_ msg: String) {
+        print("deviceOnboardFailureCallback")
+    }
+    
+    
+}
 
 //MARK: - UICollectionViewDataSource
 extension MainViewController: UICollectionViewDataSource {
@@ -153,3 +156,22 @@ extension MainViewController: UICollectionViewDelegate {
     
     
 }
+
+struct FeatureModel {
+    var type: FeatureType
+    var name: String
+    var icon: String
+}
+
+enum FeatureType: String {
+    case EWL = "EW"
+    case HFS = "HFS"
+    case DOB = "DOB"
+}
+
+
+var featureItem = [
+    FeatureModel(type: .EWL, name: "EWallet", icon: "wallet2"),
+    FeatureModel(type: .HFS, name: "Health File System", icon: "health"),
+    FeatureModel(type: .DOB, name: "DOB", icon: "star")
+]

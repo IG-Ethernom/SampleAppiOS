@@ -123,14 +123,16 @@ extension DiscoverViewController: _ETHConnectivityDeviceDelegate {
         dataLinkDescriptor = device
     }
     
-    func onConnectionDeviceReady() {
+    func onConnectionDeviceReady(sessionId: String, shareSecreteKey: String) {
         hideLoading()
         DispatchQueue.main.async {
             let controller = MainViewController()
+            controller.shareKey = shareSecreteKey
+            controller.sessionId = sessionId
             self.pushToViewController(controller: controller)
         }
     }
-
+ 
     func onConnectionTimeout() {
         hideLoading()
         dataLinkDescriptor.removeAll()

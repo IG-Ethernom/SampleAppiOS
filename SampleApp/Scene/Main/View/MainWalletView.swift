@@ -13,28 +13,6 @@ class MainWalletView: BaseView {
         setupviewItem()
     }
   
-    func setupTable() {
-        let sView = [tableView]
-        addSubviews(sView)
-        
-        NSLayoutConstraint.activate([
-          
-            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-            
-        ])
-    }
-    var tableView: UITableView = {
-        let table = UITableView(frame: .zero, style: .plain)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.backgroundColor = .white
-        table.register(cellWithClass: EwalletCell.self)
-         
-        return table
-    }()
-    
     func setupviewItem () {
         addSubview(myCollectionView)
         myCollectionView.backgroundColor = .clear
@@ -64,42 +42,3 @@ class MainWalletView: BaseView {
         return collectionview
     }()
 }
-
-
-
-// MARK: - UITableViewDataSource
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return featureItem.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withClass: EwalletCell.self)
-        let item = featureItem[indexPath.row]
-        
-        cell.titleLabel.text = item.name
-        cell.itemImage.image = UIImage(named: item.icon)
-        
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.init(hexString: "#ECEFF1")
-        cell.selectedBackgroundView = bgColorView
-        
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-}
-
-extension MainViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        operateFeature(item: featureItem[indexPath.row])
-    }
-    
-    
-}
-
-
