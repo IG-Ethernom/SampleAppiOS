@@ -14,6 +14,7 @@ class MainViewController: BaseViewController {
     var shareKey = ""
     let mainView = MainWalletView()
     private var walletAddress = ""
+    
     override func loadView() {
         view = mainView
     }
@@ -96,7 +97,8 @@ class MainViewController: BaseViewController {
     
     var ethSDK = EthHFSPackage()
     func startDeviceOnboard() {
-        ethSDK.InitialDeviceOnboardService(dobCallback: self, sessionId: sessionId, shareSecretKey: shareKey)
+        showLoading(message: "Onboarding...")
+        ethSDK.InitialDeviceOnboardService(delegate: self, sessionId: sessionId, shareSecretKey: shareKey)
     }
     
 }
@@ -104,14 +106,17 @@ class MainViewController: BaseViewController {
 extension MainViewController: _ETHDeviceOnboardDelegate {
     func companyListResponse(_ company: [CompanyResponse]) {
         print(company)
+        ethSDK.EthDeviceOnboard(companyId:"\(company.first!.comID)")
     }
     
     func deviceOnboardSucessCallback(deviceName: String, csn: String) {
         print("deviceOnboardSucessCallback")
+        hideLoading()
     }
     
     func deviceOnboardFailureCallback(_ msg: String) {
-        print("deviceOnboardFailureCallback")
+        print("deviceOnboardFailureCallback \(msg)")
+        hideLoading()
     }
     
     

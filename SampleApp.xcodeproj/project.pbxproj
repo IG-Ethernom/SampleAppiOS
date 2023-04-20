@@ -11,7 +11,7 @@
 		84306CDA298B538F00C96232 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84306CD9298B538F00C96232 /* CustomImageView.swift */; };
 		843A943A29783C5900FDA150 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A943929783C5900FDA150 /* URLSession+Extension.swift */; };
 		8450735729B2F3BC00CAA1EB /* Extension+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8450735629B2F3BC00CAA1EB /* Extension+CollectionView.swift */; };
-		84749EF629EFEC5D00CC0D92 /* EthHFSPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 84749EF529EFEC5D00CC0D92 /* EthHFSPackage */; };
+		84749EF929F0EC8600CC0D92 /* EthHFSPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 84749EF829F0EC8600CC0D92 /* EthHFSPackage */; };
 		8477148929D3EBB800D2DE20 /* MainWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8477148829D3EBB800D2DE20 /* MainWalletView.swift */; };
 		849427EE2977991E00582798 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427ED2977991E00582798 /* AppDelegate.swift */; };
 		849427F02977991E00582798 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849427EF2977991E00582798 /* SceneDelegate.swift */; };
@@ -220,7 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A460165553812E2780DE3158 /* Pods_SampleApp.framework in Frameworks */,
-				84749EF629EFEC5D00CC0D92 /* EthHFSPackage in Frameworks */,
+				84749EF929F0EC8600CC0D92 /* EthHFSPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,7 +665,7 @@
 			);
 			name = SampleApp;
 			packageProductDependencies = (
-				84749EF529EFEC5D00CC0D92 /* EthHFSPackage */,
+				84749EF829F0EC8600CC0D92 /* EthHFSPackage */,
 			);
 			productName = "Bamboo Consumer";
 			productReference = 849427EA2977991E00582798 /* SampleApp.app */;
@@ -696,7 +696,7 @@
 			);
 			mainGroup = 849427E12977991E00582798;
 			packageReferences = (
-				84749EF429EFEC5D00CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */,
+				84749EF729F0EC8600CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */,
 			);
 			productRefGroup = 849427EB2977991E00582798 /* Products */;
 			projectDirPath = "";
@@ -1095,20 +1095,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		84749EF429EFEC5D00CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */ = {
+		84749EF729F0EC8600CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/IG-Ethernom/EthHFSPackage.git";
 			requirement = {
-				branch = dob;
+				branch = device_onboard;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		84749EF529EFEC5D00CC0D92 /* EthHFSPackage */ = {
+		84749EF829F0EC8600CC0D92 /* EthHFSPackage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 84749EF429EFEC5D00CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */;
+			package = 84749EF729F0EC8600CC0D92 /* XCRemoteSwiftPackageReference "EthHFSPackage" */;
 			productName = EthHFSPackage;
 		};
 /* End XCSwiftPackageProductDependency section */
